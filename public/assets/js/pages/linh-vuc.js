@@ -40,6 +40,7 @@ $(document).ready(function() {
         callAjax('linh-vuc/sua-linh-vuc', form_data, 'PUT')
             .done(function(data) {
                 const { success, errors } = data;
+                alert = '';
                 if (errors) {
                     errors.forEach(item => {
                         alert += `<div class="alert alert-danger" role="alert">
@@ -65,6 +66,18 @@ $(document).ready(function() {
                             </div>`;
                 $("#thong_bao").html(alert);
             });
-            
     });
+
+    $("#close_form_edit").click(function(e) {
+        $("#form-edit").modal('hide');
+    });
+
+    $('.alert-nofi-success').delay(2000).fadeOut();
+    $('.alert-nofi-fail').delay(3000).fadeOut();
+    $(document).on('click', '.xoa_linh_vuc', function(e) {
+        const result = confirm('Bạn có chắc muốn xoá?');
+        if (!result) {
+            e.preventDefault();
+        }
+    })
 });

@@ -26,6 +26,11 @@
 <!-- end page title --> 
 <div class="row">
   <div class="col-7">
+	  	@if (Session::has('msg-delete'))
+	  		<div class="alert alert-success alert-nofi-success" role="alert">
+	           <i class="mdi mdi-check-all mr-2"></i> <strong>{{ Session::get('msg-delete') }}</strong>!
+	      </div>
+	  	@endif 
       <div class="card">
           <div class="card-body">
               <table id="linh-vuc-datatable" class="table nowrap">
@@ -45,12 +50,25 @@
       </div> <!-- end card -->
   </div><!-- end col-->
   <div class="col-5">
+  	@if (Session::has('msg'))
+  		<div class="alert alert-success alert-nofi-success" role="alert">
+           <i class="mdi mdi-check-all mr-2"></i> <strong>{{ Session::get('msg') }}</strong>!
+      </div>
+  	@endif 
+  	@if ($errors->any())
+		@foreach ($errors->all() as $error)
+			<div class="alert alert-danger alert-nofi-fail" role="alert">
+		        <i class="mdi mdi-block-helper mr-2"></i> <strong>{{ $error }}</strong>!
+		   </div>
+		@endforeach
+  	@endif
 	<div class="card-box">
 		<h4 class="header-title">Thêm mới lĩnh vực</h4><br>
-		<form action="#" class="parsley-examples">
+		<form action="{{ route('linh-vuc.add') }}" method="POST" class="parsley-examples">
+			@csrf
 		  <div class="form-group">
 		      <label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
-		      <input type="text" name="ten_linh_vuc" parsley-trigger="change" required placeholder="Nhập tên lĩnh vực" class="form-control" id="ten_linh_vuc">
+		      <input type="text" name="ten_linh_vuc" value="{{ old('ten_linh_vuc') }}" parsley-trigger="change" required placeholder="Nhập tên lĩnh vực" class="form-control" id="ten_linh_vuc">
 		  </div>
 
 		  <div class="form-group text-right mb-0">
@@ -94,7 +112,7 @@
 	                  <button class="btn btn-primary waves-effect waves-light mr-1" id="sua_linh_vuc" type="submit">
 	                      Cập nhật
 	                  </button>
-	                  <button type="reset" class="btn btn-secondary waves-effect">
+	                  <button type="button" id="close_form_edit" class="btn btn-secondary waves-effect">
 	                      Huỷ bỏ
 	                  </button>
 	              </div>
