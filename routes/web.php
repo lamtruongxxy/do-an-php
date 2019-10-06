@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('linh-vuc.index');
+});
+
+Route::prefix("linh-vuc")->group(function() {
+	Route::name("linh-vuc.")->group(function() {
+		Route::get("/", "LinhVucController@index")->name('index');
+		Route::put("/sua-linh-vuc", "LinhVucController@update")->name('edit');
+	});
 });
