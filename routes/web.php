@@ -21,5 +21,7 @@ Route::prefix("linh-vuc")->group(function() {
 		Route::post('/them-linh-vuc', 'LinhVucController@store')->name('add');
 		Route::put("/sua-linh-vuc", "LinhVucController@update")->name('edit');
 		Route::get('/xoa-linh-vuc/{id}', 'LinhVucController@destroy')->name('remove');
+		Route::get('/ds-linh-vuc-da-xoa', 'LinhVucController@trashList')->name('trash');
+		Route::post('/khoi-phuc', 'LinhVucController@restore')->name('restore');
 	});
 });

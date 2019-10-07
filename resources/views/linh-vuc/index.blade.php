@@ -50,18 +50,8 @@
       </div> <!-- end card -->
   </div><!-- end col-->
   <div class="col-5">
-  	@if (Session::has('msg'))
-  		<div class="alert alert-success alert-nofi-success" role="alert">
-           <i class="mdi mdi-check-all mr-2"></i> <strong>{{ Session::get('msg') }}</strong>!
-      </div>
-  	@endif 
-  	@if ($errors->any())
-		@foreach ($errors->all() as $error)
-			<div class="alert alert-danger alert-nofi-fail" role="alert">
-		        <i class="mdi mdi-block-helper mr-2"></i> <strong>{{ $error }}</strong>!
-		   </div>
-		@endforeach
-  	@endif
+  	@include('components.success')
+  	@include('components.errors')
 	<div class="card-box">
 		<h4 class="header-title">Thêm mới lĩnh vực</h4><br>
 		<form action="{{ route('linh-vuc.add') }}" method="POST" class="parsley-examples">

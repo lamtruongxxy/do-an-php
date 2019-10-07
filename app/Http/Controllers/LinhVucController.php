@@ -160,6 +160,24 @@ class LinhVucController extends Controller
         } catch (Exception $e) {
             return back()->withErrors(['Có lỗi xảy ra, mời thử lại sau']);
         }
-        
+    }
+
+    public function trashList()
+    {
+        $db = LinhVuc::onlyTrashed()->get();
+        return view('linh-vuc.trash-list', compact('db'));
+    }
+
+    public function restore(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $result = LinhVuc::onlyTrashed()->findOrFail($id)->restore();
+            if ($result) {
+                return back()->with('msg', 'Khôi phục lĩnh vực thành công');
+            }
+        } catch (Exception $ex) {
+            return back()->withErrors(['Có lỗi xãy ra, mời thử lại sau']);
+        }
     }
 }

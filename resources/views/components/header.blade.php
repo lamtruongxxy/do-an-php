@@ -99,10 +99,10 @@
               <i class="la la-cube"></i>Lĩnh vực <div class="arrow-down"></div></a>
             <ul class="submenu">
               <li>
-                <a href="apps-calendar.html">Danh sách lĩnh vực</a>
+                <a href="{{ route('linh-vuc.index') }}">Danh sách lĩnh vực</a>
               </li>
               <li>
-                <a href="apps-contacts.html">Danh sách lĩnh vực bị xoá</a>
+                <a href="{{ route('linh-vuc.trash') }}">Danh sách lĩnh vực bị xoá</a>
               </li>
             </ul>
           </li>
