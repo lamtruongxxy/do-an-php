@@ -16,33 +16,19 @@ class LinhVucController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
-            return Datatables()
-                    ->of(LinhVuc::select('id', 'ten_linh_vuc')->get())
-                    ->addColumn('action', function($data) {
-                        $button = "<button 
-                                        class='btn btn-warning waves-effect waves-light sua_linh_vuc' 
-                                        type='button'
-                                        data-id='$data->id'
-                                        data-name='$data->ten_linh_vuc'
-                                        data-toggle='modal'
-                                        data-target='#form-edit'>
-                                    <i class='far fa-edit'></i>
-                                      Sửa
-                                  </button>";
-                        $button .= '&nbsp;&nbsp;';
-                        $button .= "<a 
-                                        class='btn btn-danger waves-effect waves-light xoa_linh_vuc'
-                                        href='http://localhost:8000/linh-vuc/xoa-linh-vuc/$data->id' >
-                                    <i class='far fa-trash-alt'></i>
-                                      Xoá
-                                  </a>";
-                        return $button;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
         return view('linh-vuc.index');
+    }
+
+    public function layDanhSachLinhVuc()
+    {
+        $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc')->get();
+        return Datatables()
+                ->of($dsLinhVuc)
+                ->addColumn('action', function($data) {
+                    return view('linh-vuc.datatable', compact('data'));
+                })
+                ->rawColumns(['action'])
+                ->make(true);
     }
 
     /**
@@ -154,11 +140,18 @@ class LinhVucController extends Controller
             $data = LinhVuc::findOrFail($id);
             $result = $data->delete();
             if ($result) {
-                return back()->with('msg-delete', 'Xoá lĩnh vực thành công');
+                $msg = [
+                    'status' => true,
+                    'msg'   => 'Xoá lĩnh vực thành công'
+                ];
+                return response()->json($msg);
             }
-            return back()->withErrors(['Xoá lĩnh vực thất bại']);
         } catch (Exception $e) {
-            return back()->withErrors(['Có lỗi xảy ra, mời thử lại sau']);
+            $msg = [
+                'status'    => false,
+                'msg'   => 'Xoá lĩnh vực thất bại'
+            ];
+            return response()->json($msg);
         }
     }
 

@@ -4,5 +4,8 @@ const callAjax = (endpoint, data = null, type = "GET", dataType = "JSON") => (
 		type,
 		dataType,
 		data,
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	}
 	})
 )
