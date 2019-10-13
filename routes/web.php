@@ -26,3 +26,19 @@ Route::prefix("linh-vuc")->group(function() {
 		Route::post('/khoi-phuc', 'LinhVucController@restore')->name('restore');
 	});
 });
+
+Route::prefix('cau-hoi')->group(function() {
+	Route::name('cau-hoi.')->group(function() {
+		Route::get('/', 'CauHoiController@index')->name('index');
+		Route::get('/ds-cau-hoi-da-xoa', 'CauHoiController@trashList')->name('trash');
+		Route::get('/them-cau-hoi', 'CauHoiController@create')->name('create');
+	});
+});
+
+Route::prefix('goi-credit')->group(function() {
+	Route::name('goi-credit.')->group(function() {
+		Route::get('/', 'GoiCreditController@index')->name('index');
+		Route::get('/ds-goi-credit-da-xoa', 'GoiCreditController@trashList')->name('trash');
+		Route::get('/them-goi-credit', 'GoiCreditController@create')->name('create');
+	});
+});
