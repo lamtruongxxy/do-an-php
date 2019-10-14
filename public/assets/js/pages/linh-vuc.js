@@ -91,7 +91,7 @@ $(document).ready(function() {
             if (t.value) {
                 callAjax(`linh-vuc/xoa-linh-vuc/${id}`, null, 'DELETE')
                     .done(function(data) {
-                        const { status, msg } = data;
+                        var { status, msg } = data;
                         if (status) {
                             Swal.fire(msg, "", "success");
                             $("#linh-vuc-datatable").DataTable().ajax.reload();

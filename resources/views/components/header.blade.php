@@ -106,6 +106,32 @@
               </li>
             </ul>
           </li>
+
+          <li class="has-submenu">
+            <a href="{{ route('cau-hoi.index') }}">
+              <i class="la la-cube"></i>Câu hỏi</a>
+            <ul class="submenu">
+              <li>
+                <a href="{{ route('cau-hoi.index') }}">Danh sách câu hỏi</a>
+              </li>
+              <li>
+                <a href="{{ route('cau-hoi.create') }}">Thêm câu hỏi</a>
+              </li>
+              <li>
+                <a href="{{ route('cau-hoi.trash') }}">Danh sách câu hỏi bị xoá</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="{{ route('goi-credit.index') }}">
+              <i class="la la-cube"></i>Gói Credit</a>
+            <ul class="submenu">
+              <li>
+                <a href="{{ route('goi-credit.index') }}">Danh sách gói credit</a>
+              </li>
+            </ul>
+          </li>
         </ul>
         <!-- End navigation menu -->
 

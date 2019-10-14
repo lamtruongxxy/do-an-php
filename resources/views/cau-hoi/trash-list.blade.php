@@ -8,7 +8,8 @@
 <link href="{{ asset('assets/libs/custombox/custombox.min.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
 @stop
-@section ('content')
+
+@section('content')
 <!-- start page title -->
 <div class="row">
 	<div class="col-12">
@@ -26,86 +27,49 @@
 </div>
 <!-- end page title -->
 <div class="row">
-	<div class="col-7">
-		@if (Session::has('msg-delete'))
-		<div class="alert alert-success alert-nofi-success" role="alert">
-			<i class="mdi mdi-check-all mr-2"></i> <strong>{{ Session::get('msg-delete') }}</strong>!
-		</div>
-		@endif
+	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
-				<table id="linh-vuc-datatable" class="table nowrap">
+				<table id="cau-hoi-datatable" class="table dt-responsive">
 					<thead>
 						<tr>
-							<th width="20%">ID</th>
-							<th width="50%">Tên lĩnh vực</th>
-							<th width="30%"></th>
+							<td>ID</td>
+							<td>Nội dung</td>
+							<td>Lĩnh vực</td>
+							<td>Phương án A</td>
+							<td>Phương án B</td>
+							<td>Phương án C</td>
+							<td>Phương án D</td>
+							<td>Đáp án</td>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody>
-
+						@foreach($dsCauHoi as $cauhoi)
+						<tr>
+							<td>{{ $cauhoi->id }}</td>
+							<td>{{ $cauhoi->noi_dung }}</td>
+							<td>{{ $cauhoi->linh_vuc_id }}</td>
+							<td>{{ $cauhoi->phuong_an_a }}</td>
+							<td>{{ $cauhoi->phuong_an_b }}</td>
+							<td>{{ $cauhoi->phuong_an_c }}</td>
+							<td>{{ $cauhoi->phuong_an_d }}</td>
+							<td>{{ $cauhoi->dap_an }}</td>
+							<td>
+								<button class="btn btn-warning"><i class='far fa-edit'></i></button>
+								<button class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+							</td>
+            </tr>
+						@endforeach
 					</tbody>
-				</table>
-
+        </table>
 			</div> <!-- end card body-->
 		</div> <!-- end card -->
 	</div><!-- end col-->
-	<div class="col-5">
-		@include('components.success')
-		@include('components.errors')
-		<div class="card-box">
-			<h4 class="header-title">Thêm mới lĩnh vực</h4><br>
-			<form action="{{ route('linh-vuc.add') }}" method="POST" class="parsley-examples">
-				@csrf
-				<div class="form-group">
-					<label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
-					<input type="text" name="ten_linh_vuc" value="{{ old('ten_linh_vuc') }}" parsley-trigger="change" required placeholder="Nhập tên lĩnh vực" class="form-control" id="ten_linh_vuc">
-				</div>
-
-				<div class="form-group text-right mb-0">
-					<button class="btn btn-primary waves-effect waves-light" type="submit">
-						<i class="fas fa-plus"></i>
-						Thêm
-					</button>
-					<button type="reset" class="btn btn-secondary waves-effect">
-						Huỷ bỏ
-					</button>
-				</div>
-			</form>
-		</div> <!-- end card-box -->
-	</div> <!-- end col-->
 </div>
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="form-edit">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myCenterModalLabel">Cập nhật lĩnh vực</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			</div>
-			<div class="modal-body">
-				<span id="thong_bao"></span>
-				<form action="#" class="parsley-examples" id="form_edit">
-					@csrf
-					<input type="hidden" name="id" id="id_linh_vuc" value="">
-					<div class="form-group">
-						<label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
-						<input type="text" name="ten_linh_vuc" parsley-trigger="change" required placeholder="Enter user name" class="form-control" id="ten_linh_vuc_edit" value="">
-					</div>
-					<div class="form-group text-right mb-0">
-						<button class="btn btn-primary waves-effect waves-light mr-1" id="sua_linh_vuc" type="submit">
-							Cập nhật
-						</button>
-						<button type="button" id="close_form_edit" class="btn btn-secondary waves-effect">
-							Huỷ bỏ
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 @stop
+
+
 
 @push('scripts')
 <!-- third party js -->
@@ -134,5 +98,5 @@
 <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
 <!-- third party js ends -->
 <!-- Datatables init -->
-<script src="{{ asset('assets/js/pages/linh-vuc.js') }}"></script>
+<script src="{{ asset('assets/js/pages/cau-hoi.js') }}"></script>
 @endpush
