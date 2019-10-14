@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\GoiCredit;
+use App\NguoiChoi;
 use Illuminate\Http\Request;
 
-class GoiCreditController extends Controller
+class NguoiChoiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +14,8 @@ class GoiCreditController extends Controller
      */
     public function index()
     {
-        $dsGoiCredit = GoiCredit::all();
-        return view('goi-credit.index', compact('dsGoiCredit'));
-    }
-
-    public function trashList()
-    {
-        $dsGoiCredit = GoiCredit::onlyTrashed()->get();
-        return view('goi-credit.trash-list', compact('dsGoiCredit'));
+        $dsNguoiChoi = NguoiChoi::all();
+        return view('nguoi-choi.index', compact('dsNguoiChoi'));
     }
 
     /**
@@ -31,7 +25,13 @@ class GoiCreditController extends Controller
      */
     public function create()
     {
-        //
+        
+    }
+
+    public function trashList()
+    {
+        $dsNguoiChoi = NguoiChoi::onlyTrashed()->get();
+        return view('nguoi-choi.trash-list', compact('dsNguoiChoi'));
     }
 
     /**
@@ -48,10 +48,10 @@ class GoiCreditController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\GoiCredit  $goiCredit
+     * @param  \App\NguoiChoi  $nguoiChoi
      * @return \Illuminate\Http\Response
      */
-    public function show(GoiCredit $goiCredit)
+    public function show(NguoiChoi $nguoiChoi)
     {
         //
     }
@@ -59,10 +59,10 @@ class GoiCreditController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\GoiCredit  $goiCredit
+     * @param  \App\NguoiChoi  $nguoiChoi
      * @return \Illuminate\Http\Response
      */
-    public function edit(GoiCredit $goiCredit)
+    public function edit(NguoiChoi $nguoiChoi)
     {
         //
     }
@@ -71,10 +71,10 @@ class GoiCreditController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\GoiCredit  $goiCredit
+     * @param  \App\NguoiChoi  $nguoiChoi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GoiCredit $goiCredit)
+    public function update(Request $request, NguoiChoi $nguoiChoi)
     {
         //
     }
@@ -82,10 +82,10 @@ class GoiCreditController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\GoiCredit  $goiCredit
+     * @param  \App\NguoiChoi  $nguoiChoi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GoiCredit $goiCredit)
+    public function destroy(NguoiChoi $nguoiChoi)
     {
         //
     }

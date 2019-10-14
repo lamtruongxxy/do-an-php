@@ -130,6 +130,32 @@
               <li>
                 <a href="{{ route('goi-credit.index') }}">Danh sách gói credit</a>
               </li>
+              <li>
+                <a href="{{ route('goi-credit.trash') }}">Danh sách gói credit bị xoá</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="{{ route('nguoi-choi.index') }}">
+              <i class="la la-cube"></i>Người chơi</a>
+            <ul class="submenu">
+              <li>
+                <a href="{{ route('nguoi-choi.index') }}">Danh sách người chơi</a>
+              </li>
+              <li>
+                <a href="{{ route('nguoi-choi.trash') }}">Danh sách người chơi bị khoá</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="{{ route('lich-su-mua-credit.index') }}">
+              <i class="la la-cube"></i>Lịch sử mua credit</a>
+            <ul class="submenu">
+              <li>
+                <a href="{{ route('lich-su-mua-credit.index') }}">Lịch sử mua credit</a>
+              </li>
             </ul>
           </li>
         </ul>
