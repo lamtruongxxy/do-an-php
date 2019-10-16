@@ -42,3 +42,22 @@ Route::prefix('goi-credit')->group(function() {
 		Route::get('/them-goi-credit', 'GoiCreditController@create')->name('create');
 	});
 });
+
+Route::prefix('nguoi-choi')->group(function() {
+	Route::name('nguoi-choi.')->group(function() {
+		Route::get('/', 'NguoiChoiController@index')->name('index');
+		Route::get('/ds-nguoi-choi-da-xoa', 'NguoiChoiController@trashList')->name('trash');
+	});
+});
+
+Route::prefix('lich-su-mua-credit')->group(function() {
+	Route::name('lich-su-mua-credit.')->group(function() {
+		Route::get('/', 'LichSuMuaCreditController@index')->name('index');
+	});
+});
+
+Route::prefix('luot-choi')->group(function() {
+	Route::name('luot-choi.')->group(function() {
+		Route::get('/', 'LuotChoiController@index')->name('index');
+	});
+});
