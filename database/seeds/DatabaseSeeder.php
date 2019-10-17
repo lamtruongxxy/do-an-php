@@ -13,5 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(LinhVucSeed::class);
         $this->call(CauHoiSeed::class);
+        $this->call(CTLuotChoi::class);
+        $this->call(GoiCreditSeed::class);
+        $this->call(LichSuMuaCreditSeed::class);
+        $this->call(LuotChoiSeed::class);
+        $this->call(NguoiChoiSeed::class);
     }
 }
