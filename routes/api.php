@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::namespace('API')->group(function() {
+	Route::prefix('linh-vuc')->group(function() {
+		Route::get('/', 'LinhVucAPI@DSLinhVuc');
+		Route::get('/{id}', 'LinhVucAPI@DSCauHoiTheoLinhVuc');
+	});
 });
