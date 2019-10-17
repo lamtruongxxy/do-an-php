@@ -17,4 +17,9 @@ class CauHoi extends Model
     {
         return $this->belongsToMany('App\LuotChoi', 'chi_tiet_luot_choi');
     }
+
+    public function linhVuc()
+    {
+    	return $this->belongsTo('App\LinhVuc');
+    }
 }

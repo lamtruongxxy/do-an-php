@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CauHoi;
+use App\LinhVuc;
 use Illuminate\Http\Request;
 
 class CauHoiController extends Controller
@@ -31,7 +32,8 @@ class CauHoiController extends Controller
      */
     public function create()
     {
-        return view('cau-hoi.form');
+        $dsLinhVuc = LinhVuc::all();
+        return view('cau-hoi.form', compact('dsLinhVuc'));
     }
 
     /**
@@ -42,7 +44,19 @@ class CauHoiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $kq = CauHoi::create($request->all());
+            if ($kq) {
+                return back()->with('msg', 'Thêm câu hỏi thành công');
+            }
+            return back()
+                    ->withErrors('Thêm câu hỏi thất bại')
+                    ->withInput();
+        } catch (Exception $e) {
+            return back()
+                    ->withErrors('Có lỗi xảy ra, mời thử lại sau')
+                    ->withInput();
+        }
     }
 
     /**
@@ -62,9 +76,15 @@ class CauHoiController extends Controller
      * @param  \App\CauHoi  $cauHoi
      * @return \Illuminate\Http\Response
      */
-    public function edit(CauHoi $cauHoi)
+    public function edit($id)
     {
-        //
+        try {
+            $cauhoi = CauHoi::findOrFail($id);
+            $dsLinhVuc = LinhVuc::all();
+            return view('cau-hoi.form', compact('cauhoi', 'dsLinhVuc'));
+        } catch (Exception $e) {
+            return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
+        }
     }
 
     /**
@@ -74,9 +94,23 @@ class CauHoiController extends Controller
      * @param  \App\CauHoi  $cauHoi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CauHoi $cauHoi)
+    public function update(Request $request, $id)
     {
-        //
+        $kq = CauHoi::findOrFail($id)->update($request->all());
+        try {
+            if ($kq) {
+                return redirect()
+                        ->route('cau-hoi.index')
+                        ->with('msg', 'Cập nhật câu hỏi thành công');
+            }
+            return back()
+                    ->withErrors('Cập nhật câu hỏi thất bại')
+                    ->withInput();
+        } catch (Exception $e) {
+            return back()
+                    ->withErrors('Có lỗi xảy ra, mời thử lại sau')
+                    ->withInput();
+        }
     }
 
     /**
@@ -85,8 +119,31 @@ class CauHoiController extends Controller
      * @param  \App\CauHoi  $cauHoi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CauHoi $cauHoi)
+    public function destroy($id)
     {
-        //
+        try {
+            $kq = CauHoi::findOrFail($id);
+            if ($kq) {
+                return back()->with('msg', 'Xoá câu hỏi thành công');
+            }
+            return back()->withErrors('Xoá câu hỏi thất bại');
+        } catch (Exception $e) {
+            return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $kq = CauHoi::onlyTrashed()
+                    ->findOrFail($id)
+                    ->restore();
+            if ($kq) {
+                return back()->with('msg', 'Khôi phục câu hỏi thành công');
+            }
+            return back()->withErrors('Khôi phục câu hỏi thất bại');
+        } catch (Exception $e) {
+            return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
+        }
     }
 }

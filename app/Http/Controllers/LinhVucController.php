@@ -16,20 +16,21 @@ class LinhVucController extends Controller
      */
     public function index()
     {
-        return view('linh-vuc.index');
+        $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc')->get();
+        return view('linh-vuc.index', compact('dsLinhVuc'));
     }
 
-    public function layDanhSachLinhVuc()
-    {
-        $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc')->get();
-        return Datatables()
-                ->of($dsLinhVuc)
-                ->addColumn('action', function($data) {
-                    return view('linh-vuc.datatable', compact('data'));
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-    }
+    // public function layDanhSachLinhVuc()
+    // {
+    //     $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc')->get();
+    //     return Datatables()
+    //             ->of($dsLinhVuc)
+    //             ->addColumn('action', function($data) {
+    //                 return view('linh-vuc.datatable', compact('data'));
+    //             })
+    //             ->rawColumns(['action'])
+    //             ->make(true);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -49,24 +50,31 @@ class LinhVucController extends Controller
      */
     public function store(Request $request)
     {
-        $rule = [
-            'ten_linh_vuc'  => ['required', 'unique:linh_vuc']
-        ];
-        $message = [
-            'ten_linh_vuc.required' => 'Tên lĩnh vực không để trống',
-            'ten_linh_vuc.unique'   => "Tên lĩnh vực đã tồn tại"
-        ];
-        $valid = Validator::make($request->all(), $rule, $message);
-        if ($valid->fails()) {
-            return back()->withErrors([$valid->errors()->all()])->withInput();
-        }
-        $result = LinhVuc::create([
-            'ten_linh_vuc'  => $request->ten_linh_vuc
-        ]);
-        if ($result) {
+        // $rule = [
+        //     'ten_linh_vuc'  => ['required', 'unique:linh_vuc']
+        // ];
+        // $message = [
+        //     'ten_linh_vuc.required' => 'Tên lĩnh vực không để trống',
+        //     'ten_linh_vuc.unique'   => "Tên lĩnh vực đã tồn tại"
+        // ];
+        // $valid = Validator::make($request->all(), $rule, $message);
+        // if ($valid->fails()) {
+        //     return back()->withErrors([$valid->errors()->all()])->withInput();
+        // }
+        // $result = LinhVuc::create([
+        //     'ten_linh_vuc'  => $request->ten_linh_vuc
+        // ]);
+        // if ($result) {
+        //     return back()->with('msg', 'Thêm lĩnh vực thành công');
+        // }
+        // return back()->withErrors(['Thêm lĩnh vực thất bại'])->withInput();
+        $kq = LinhVuc::create($request->all());
+        if ($kq) {
             return back()->with('msg', 'Thêm lĩnh vực thành công');
         }
-        return back()->withErrors(['Thêm lĩnh vực thất bại'])->withInput();
+        return back()
+                ->withErrors('Thêm lĩnh vực thất bại')
+                ->withInput();
     }
 
     /**
@@ -88,7 +96,7 @@ class LinhVucController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -100,34 +108,50 @@ class LinhVucController extends Controller
      */
     public function update(Request $request)
     {
-        $rule = [
-            'id'            => ['required', 'exists:linh_vuc,id'],
-            'ten_linh_vuc'  => [
-                'required',
-                Rule::unique('linh_vuc')->ignore($request->id)
-            ]
-        ];
-        $message = [
-            'id.required'           => 'Trường ID không để trống',
-            'ten_linh_vuc.required' => "Trường tên lĩnh vực không để trống",
-            'id.exists'             => "ID không tồn tại",
-            'ten_linh_vuc.unique'   => "Tên lĩnh vực đã tồn tại",
-        ];
-        $valid = Validator::make($request->all(), $rule, $message);
-        if($valid->passes()) {
-            $output = $this->updateLinhVuc($request->id, $request->ten_linh_vuc);
-            return response()->json($output);
+        try {
+            $linhvuc = LinhVuc::findOrFail($request->id);
+            $linhvuc->ten_linh_vuc = $request->ten_linh_vuc;
+            $kq = $linhvuc->save();
+            if ($kq) {
+                return back()->with('msg', 'Cập nhật lĩnh vực thành công');
+            }
+            return back()
+                    ->withErrors('Cập nhật lĩnh vực thất bại')
+                    ->withInput();
+        } catch (Exception $e) {
+            return back()
+                    ->withErrors('Có lỗi xảy ra, mời thử lại sau')
+                    ->withInput();
         }
-        $errors = [];
-        return response()->json(['errors' => $valid->errors()->all()]);
+        
+        // $rule = [
+        //     'id'            => ['required', 'exists:linh_vuc,id'],
+        //     'ten_linh_vuc'  => [
+        //         'required',
+        //         Rule::unique('linh_vuc')->ignore($request->id)
+        //     ]
+        // ];
+        // $message = [
+        //     'id.required'           => 'Trường ID không để trống',
+        //     'ten_linh_vuc.required' => "Trường tên lĩnh vực không để trống",
+        //     'id.exists'             => "ID không tồn tại",
+        //     'ten_linh_vuc.unique'   => "Tên lĩnh vực đã tồn tại",
+        // ];
+        // $valid = Validator::make($request->all(), $rule, $message);
+        // if($valid->passes()) {
+        //     $output = $this->updateLinhVuc($request->id, $request->ten_linh_vuc);
+        //     return response()->json($output);
+        // }
+        // $errors = [];
+        // return response()->json(['errors' => $valid->errors()->all()]);
     }
 
-    private function updateLinhVuc($id, $ten_linh_vuc) {
-        $linh_vuc = LinhVuc::find($id);
-        $linh_vuc->ten_linh_vuc = $ten_linh_vuc;
-        $linh_vuc->save();
-        return ['success' => "Cập nhật thành công"];
-    }
+    // private function updateLinhVuc($id, $ten_linh_vuc) {
+    //     $linh_vuc = LinhVuc::find($id);
+    //     $linh_vuc->ten_linh_vuc = $ten_linh_vuc;
+    //     $linh_vuc->save();
+    //     return ['success' => "Cập nhật thành công"];
+    // }
     /**
      * Remove the specified resource from storage.
      *
@@ -136,22 +160,32 @@ class LinhVucController extends Controller
      */
     public function destroy($id)
     {
+        // try {
+        //     $data = LinhVuc::findOrFail($id);
+        //     $result = $data->delete();
+        //     if ($result) {
+        //         $msg = [
+        //             'status' => true,
+        //             'msg'   => 'Xoá lĩnh vực thành công'
+        //         ];
+        //         return response()->json($msg);
+        //     }
+        // } catch (Exception $e) {
+        //     $msg = [
+        //         'status'    => false,
+        //         'msg'   => 'Xoá lĩnh vực thất bại'
+        //     ];
+        //     return response()->json($msg);
+        // }
         try {
-            $data = LinhVuc::findOrFail($id);
-            $result = $data->delete();
-            if ($result) {
-                $msg = [
-                    'status' => true,
-                    'msg'   => 'Xoá lĩnh vực thành công'
-                ];
-                return response()->json($msg);
+            $linhvuc = LinhVuc::findOrFail($id);
+            $kq = $linhvuc->delete();
+            if ($kq) {
+                return back()->with('msg', 'Xoá lĩnh vực thành công');
             }
+            return back()->withErrors('Xoá lĩnh vực thất bại');
         } catch (Exception $e) {
-            $msg = [
-                'status'    => false,
-                'msg'   => 'Xoá lĩnh vực thất bại'
-            ];
-            return response()->json($msg);
+            return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
         }
     }
 
@@ -165,12 +199,15 @@ class LinhVucController extends Controller
     {
         try {
             $id = $request->id;
-            $result = LinhVuc::onlyTrashed()->findOrFail($id)->restore();
-            if ($result) {
+            $kq = LinhVuc::onlyTrashed()
+                    ->findOrFail($id)
+                    ->restore();
+            if ($kq) {
                 return back()->with('msg', 'Khôi phục lĩnh vực thành công');
             }
+            return back()->withErrors('Khôi phục lĩnh vực thất bại');
         } catch (Exception $ex) {
-            return back()->withErrors(['Có lỗi xãy ra, mời thử lại sau']);
+            return back()->withErrors('Có lỗi xãy ra, mời thử lại sau');
         }
     }
 }
