@@ -47,8 +47,15 @@
               <td>{{ $goiCredit->credit }}</td>
               <td>{{ $goiCredit->so_tien }}</td>
               <td>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#form-edit"><i class='far fa-edit'></i></button>
-                <button class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+                <form action="{{ route('goi-credit.restore') }}" method="POST">
+                  <input type="hidden" name="id" value="{{ $goiCredit->id }}">
+                  @csrf
+                  <div class="button-list">
+                      <button type="submit" class="btn btn-purple waves-effect waves-light">
+                          <span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
+                      </button>
+                  </div>                              
+                </form>
               </td>
             </tr>
             @endforeach

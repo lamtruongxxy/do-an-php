@@ -62,7 +62,7 @@
   <div class="col-5">
     <div class="card-box">
       <h4 class="header-title">Thêm mới gói credit</h4><br>
-      <form action="{{ route('linh-vuc.add') }}" method="POST" class="parsley-examples">
+      <form action="#" method="POST" class="parsley-examples">
         @csrf
         <div class="form-group">
           <label for="userName">Tên gói credit<span class="text-danger">*</span></label>

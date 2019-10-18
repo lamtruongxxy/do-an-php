@@ -47,8 +47,28 @@
               <td>{{ $goiCredit->credit }}</td>
               <td>{{ $goiCredit->so_tien }}</td>
               <td>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#form-edit"><i class='far fa-edit'></i></button>
-                <button class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+                <form action="{{ route('goi-credit.remove', ['id' => $goiCredit->id ]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button 
+                      class='btn btn-warning waves-effect waves-light sua-goi-credit' 
+                      type='button'
+                      data-toggle='modal'
+                      data-target='#form-edit'
+                      data-id='{{ $goiCredit->id }}'
+                      data-ten='{{ $goiCredit->ten_goi }}'
+                      data-credit='{{ $goiCredit->credit}}'
+                      data-so_tien='{{ $goiCredit->so_tien}}'>
+                      <i class='far fa-edit'></i>
+                      Sửa
+                    </button>
+                    <button 
+                      type='submit'
+                      class='btn btn-danger waves-effect waves-light'>
+                      <i class='far fa-trash-alt'></i>
+                      Xoá
+                    </button>
+                  </form>
               </td>
             </tr>
             @endforeach
@@ -61,19 +81,19 @@
   <div class="col-5">
     <div class="card-box">
       <h4 class="header-title">Thêm mới gói credit</h4><br>
-      <form action="{{ route('linh-vuc.add') }}" method="POST" class="parsley-examples">
+      <form action="{{ route('goi-credit.store') }}" method="POST" class="parsley-examples">
         @csrf
         <div class="form-group">
           <label for="userName">Tên gói credit<span class="text-danger">*</span></label>
-          <input type="text" parsley-trigger="change" required placeholder="Nhập tên gói credit" class="form-control" id="">
+          <input type="text" parsley-trigger="change" required placeholder="Nhập tên gói credit" class="form-control" id="ten_goi" name="ten_goi">
         </div>
         <div class="form-group">
           <label for="userName">Credit<span class="text-danger">*</span></label>
-          <input type="number" parsley-trigger="change" required placeholder="Nhập số credit" class="form-control" id="">
+          <input type="number" parsley-trigger="change" required placeholder="Nhập số credit" class="form-control" id="credit" name="credit">
         </div>
         <div class="form-group">
           <label for="userName">Số tiền<span class="text-danger">*</span></label>
-          <input type="number" parsley-trigger="change" required placeholder="Nhập số tiền" class="form-control" id="">
+          <input type="number" parsley-trigger="change" required placeholder="Nhập số tiền" class="form-control" id="so_tien" name="so_tien">
         </div>
         <div class="form-group text-right mb-0">
           <button class="btn btn-primary waves-effect waves-light" type="submit">
@@ -97,22 +117,24 @@
       </div>
       <div class="modal-body">
         <span id="thong_bao"></span>
-        <form action="#" class="parsley-examples" id="form_edit">
-          <input type="hidden" name="id" id="" value="">
+        <form action="{{route('goi-credit.update')}}" class="parsley-examples" id="form_edit" method="POST">
+          @csrf
+          @method('PUT')
+          <input type="hidden" name="id" id="goi_credit_id" value="">
           <div class="form-group">
             <label for="userName">Tên gói credit<span class="text-danger">*</span></label>
-            <input type="text" parsley-trigger="change" required placeholder="Nhập tên gói credit" class="form-control" id="">
+            <input type="text" parsley-trigger="change" required placeholder="Nhập tên gói credit" class="form-control" id="ten_goi_credit" name="ten_goi">
           </div>
           <div class="form-group">
             <label for="userName">Credit<span class="text-danger">*</span></label>
-            <input type="number" parsley-trigger="change" required placeholder="Nhập số credit" class="form-control" id="">
+            <input type="number" parsley-trigger="change" required placeholder="Nhập số credit" class="form-control" id="so_credit" name="credit">
           </div>
           <div class="form-group">
             <label for="userName">Số tiền<span class="text-danger">*</span></label>
-            <input type="number" parsley-trigger="change" required placeholder="Nhập số tiền" class="form-control" id="">
+            <input type="number" parsley-trigger="change" required placeholder="Nhập số tiền" class="form-control" id="sotien" name="so_tien">
           </div>
           <div class="form-group text-right mb-0">
-            <button class="btn btn-primary waves-effect waves-light mr-1" id="sua_linh_vuc" type="submit">
+            <button class="btn btn-primary waves-effect waves-light mr-1" id="sua_goi_credit" type="submit">
               Cập nhật
             </button>
             <button type="button" id="close_form_edit" class="btn btn-secondary waves-effect">
@@ -166,6 +188,17 @@
       drawCallback: function() {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
       },
+    });
+
+        $(document).on('click', '.sua-goi-credit', function() {
+        var id = $(this).data('id');
+        var ten = $(this).data('ten');
+        var credit = $(this).data('credit');
+        var so_tien = $(this).data('so_tien');
+        $("#goi_credit_id").val(id);
+        $("#ten_goi_credit").val(ten);
+        $("#so_credit").val(credit);
+        $('#sotien').val(so_tien);
     });
   });
 </script>

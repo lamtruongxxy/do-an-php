@@ -44,7 +44,11 @@ Route::prefix('goi-credit')->group(function() {
 	Route::name('goi-credit.')->group(function() {
 		Route::get('/', 'GoiCreditController@index')->name('index');
 		Route::get('/ds-goi-credit-da-xoa', 'GoiCreditController@trashList')->name('trash');
-		Route::get('/them-goi-credit', 'GoiCreditController@create')->name('create');
+		Route::post('/them-goi-credit', 'GoiCreditController@store')->name('store');
+		Route::put("/sua-goi-credit", "GoiCreditController@update")->name('update');
+		Route::delete('/xoa-goi-credit/{id}', 'GoiCreditController@destroy')->name('remove');
+		Route::get('/ds-goi-credit-da-xoa', 'GoiCreditController@trashList')->name('trash');
+		Route::post('/khoi-phuc/', 'GoiCreditController@restore')->name('restore');
 	});
 });
 

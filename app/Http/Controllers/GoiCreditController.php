@@ -42,7 +42,16 @@ class GoiCreditController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kq = GoiCredit::create($request->all());
+        if($kq)
+        {
+            return back()->with('msg', 'Thêm gói credit thành công');
+        }
+        else
+        {
+            return back()->withErrors('Thêm gói credit thất bại')->withInput();
+
+        }
     }
 
     /**
@@ -64,7 +73,7 @@ class GoiCreditController extends Controller
      */
     public function edit(GoiCredit $goiCredit)
     {
-        //
+
     }
 
     /**
@@ -74,9 +83,25 @@ class GoiCreditController extends Controller
      * @param  \App\GoiCredit  $goiCredit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GoiCredit $goiCredit)
+    public function update(Request $request)
     {
-        //
+        try {
+            $goiCredit = GoiCredit::findOrFail($request->id);
+            $goiCredit->ten_goi = $request->ten_goi;
+            $goiCredit->credit = $request->credit;
+            $goiCredit->so_tien = $request->so_tien;
+            $kq = $goiCredit->save();
+            if ($kq) {
+                return back()->with('msg', 'Cập nhật gói credit thành công');
+            }
+            return back()
+                    ->withErrors('Cập nhật gói credit thất bại')
+                    ->withInput();
+        } catch (Exception $e) {
+            return back()
+                    ->withErrors('Có lỗi xảy ra, mời thử lại sau')
+                    ->withInput();
+        }
     }
 
     /**
@@ -85,8 +110,32 @@ class GoiCreditController extends Controller
      * @param  \App\GoiCredit  $goiCredit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GoiCredit $goiCredit)
+    public function destroy($id)
     {
-        //
+        try {
+            $goiCredit = GoiCredit::findOrFail($id);
+            $kq = $goiCredit->delete();
+            if ($kq) {
+                return back()->with('msg', 'Xoá gói credit thành công');
+            }
+            return back()->withErrors('Xoá gói credit thất bại');
+        } catch (Exception $e) {
+            return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
+        }
+    }
+    public function restore(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $kq = GoiCredit::onlyTrashed()
+                    ->findOrFail($id)
+                    ->restore();
+            if ($kq) {
+                return back()->with('msg', 'Khôi phục gió credit thành công');
+            }
+            return back()->withErrors('Khôi phục gói credit thất bại');
+        } catch (Exception $ex) {
+            return back()->withErrors('Có lỗi xãy ra, mời thử lại sau');
+        }
     }
 }
