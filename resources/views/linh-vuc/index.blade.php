@@ -27,11 +27,6 @@
 <!-- end page title -->
 <div class="row">
 	<div class="col-7">
-		@if (Session::has('msg-delete'))
-		<div class="alert alert-success alert-nofi-success" role="alert">
-			<i class="mdi mdi-check-all mr-2"></i> <strong>{{ Session::get('msg-delete') }}</strong>!
-		</div>
-		@endif
 		<div class="card">
 			<div class="card-body">
 				<table id="linh-vuc-datatable" class="table nowrap">
@@ -43,7 +38,34 @@
 						</tr>
 					</thead>
 					<tbody>
-
+						@foreach($dsLinhVuc as $linhvuc)
+							<tr>
+								<td>{{ $linhvuc->id }}</td>
+								<td>{{ $linhvuc->ten_linh_vuc }}</td>
+								<td>
+									<form action="{{ route('linh-vuc.remove', ['id' => $linhvuc->id ]) }}" method="POST">
+										@csrf
+										@method('DELETE')
+										<button 
+										  class='btn btn-warning waves-effect waves-light sua-linh-vuc' 
+										  type='button'
+										  data-toggle='modal'
+										  data-target='#form-edit'
+										  data-id='{{ $linhvuc->id }}'
+										  data-name='{{ $linhvuc->ten_linh_vuc }}'>
+											<i class='far fa-edit'></i>
+											Sửa
+										</button>
+										<button 
+										  type='submit'
+										  class='btn btn-danger waves-effect waves-light'>
+											<i class='far fa-trash-alt'></i>
+											Xoá
+										</button>
+									</form>
+								</td>
+							</tr>
+						@endforeach
 					</tbody>
 				</table>
 
@@ -55,7 +77,7 @@
 		@include('components.errors')
 		<div class="card-box">
 			<h4 class="header-title">Thêm mới lĩnh vực</h4><br>
-			<form action="{{ route('linh-vuc.add') }}" method="POST" class="parsley-examples">
+			<form action="{{ route('linh-vuc.store') }}" method="POST" class="parsley-examples">
 				@csrf
 				<div class="form-group">
 					<label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
@@ -83,9 +105,9 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			</div>
 			<div class="modal-body">
-				<span id="thong_bao"></span>
-				<form action="#" class="parsley-examples" id="form_edit">
+				<form action="{{ route('linh-vuc.update') }}" method="POST" class="parsley-examples" id="form_edit">
 					@csrf
+					@method('PUT')
 					<input type="hidden" name="id" id="id_linh_vuc" value="">
 					<div class="form-group">
 						<label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
@@ -125,14 +147,32 @@
 <script src="{{ asset('assets/libs/custombox/custombox.min.js') }}"></script>
 <!-- sweetalert -->
 <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}" type="text/javascript"></script>
-<!-- call ajax -->
-<script src="{{ asset('assets/libs/ajax/callAjax.js') }}" type="text/javascript"></script>
 <!-- Plugin js-->
 <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
 
 <!-- Validation init js-->
 <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
 <!-- third party js ends -->
-<!-- Datatables init -->
-<script src="{{ asset('assets/js/pages/linh-vuc.js') }}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#linh-vuc-datatable").DataTable({
+			language: {
+            paginate: {
+                previous: "<i class='mdi mdi-chevron-left'>",
+                next: "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        drawCallback: function() {
+            $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+        },
+		});
+
+		$(document).on('click', '.sua-linh-vuc', function() {
+        var id = $(this).data('id');
+        var name = $(this).data('name');
+        $("#id_linh_vuc").val(id);
+        $("#ten_linh_vuc_edit").val(name);
+    });
+	});
+</script>
 @endpush

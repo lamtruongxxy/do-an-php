@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(LuotChoi::class, function (Faker $faker) {
     return [
-        'id_nguoi_choi' => 1,
+        'nguoi_choi_id' => 1,
     ];
 });

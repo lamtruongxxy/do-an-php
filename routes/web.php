@@ -18,12 +18,12 @@ Route::get('/', function () {
 Route::prefix("linh-vuc")->group(function() {
 	Route::name("linh-vuc.")->group(function() {
 		Route::get("/", "LinhVucController@index")->name('index');
-		Route::get('/lay-danh-sach', 'LinhVucController@layDanhSachLinhVuc')->name('getListAjax');
-		Route::post('/them-linh-vuc', 'LinhVucController@store')->name('add');
-		Route::put("/sua-linh-vuc", "LinhVucController@update")->name('edit');
+		Route::post('/them-linh-vuc', 'LinhVucController@store')->name('store');
+		Route::get('/sua-linh-vuc/{id}', 'LinhVucController@edit')->name('edit');
+		Route::put("/sua-linh-vuc", "LinhVucController@update")->name('update');
 		Route::delete('/xoa-linh-vuc/{id}', 'LinhVucController@destroy')->name('remove');
 		Route::get('/ds-linh-vuc-da-xoa', 'LinhVucController@trashList')->name('trash');
-		Route::post('/khoi-phuc', 'LinhVucController@restore')->name('restore');
+		Route::post('/khoi-phuc/', 'LinhVucController@restore')->name('restore');
 	});
 });
 
@@ -32,6 +32,11 @@ Route::prefix('cau-hoi')->group(function() {
 		Route::get('/', 'CauHoiController@index')->name('index');
 		Route::get('/ds-cau-hoi-da-xoa', 'CauHoiController@trashList')->name('trash');
 		Route::get('/them-cau-hoi', 'CauHoiController@create')->name('create');
+		Route::get('/sua-cau-hoi/{id}', 'CauHoiController@edit')->name('edit');
+		Route::post('/them-cau-hoi', 'CauHoiController@store')->name('store');
+		Route::put('/sua-cau-hoi/{id}', 'CauHoiController@update')->name('update');
+		Route::delete('/xoa-cau-hoi/{id}', 'CauHoiController@destroy')->name('remove');
+		Route::post('/khoi-phuc/{id}', 'CauHoiController@restore')->name('restore');
 	});
 });
 

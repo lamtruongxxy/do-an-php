@@ -27,6 +27,8 @@
 <!-- end page title -->
 <div class="row">
 	<div class="col-12">
+		@include('components.success')
+		@include('components.errors')
 		<div class="card">
 			<div class="card-body">
 				<table id="cau-hoi-datatable" class="table dt-responsive">
@@ -55,8 +57,12 @@
 							<td>{{ $cauhoi->phuong_an_d }}</td>
 							<td>{{ $cauhoi->dap_an }}</td>
 							<td>
-								<button class="btn btn-warning"><i class='far fa-edit'></i></button>
-								<button class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+								<form action="{{ route('cau-hoi.remove', ['id' => $cauhoi->id]) }}" method="POST">
+									@csrf
+									@method('DELETE')
+									<a  href="{{ route('cau-hoi.edit', ['id' => $cauhoi->id]) }}" class="btn btn-warning"><i class='far fa-edit'></i></a>
+									<button type="submit" class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+								</form>
 							</td>
 						</tr>
 						@endforeach
