@@ -70,7 +70,12 @@ class LinhVucController extends Controller
         // return back()->withErrors(['Thêm lĩnh vực thất bại'])->withInput();
         $kq = LinhVuc::create($request->all());
         if ($kq) {
-            return back()->with('msg', 'Thêm lĩnh vực thành công');
+            $thongbao = Array(
+                "text"      => "Thêm lĩnh vực thành công",
+                "icon"   => "success",
+
+            );
+            return back()->with('msg', $thongbao);
         }
         return back()
                 ->withErrors('Thêm lĩnh vực thất bại')
@@ -113,7 +118,12 @@ class LinhVucController extends Controller
             $linhvuc->ten_linh_vuc = $request->ten_linh_vuc;
             $kq = $linhvuc->save();
             if ($kq) {
-                return back()->with('msg', 'Cập nhật lĩnh vực thành công');
+                $thongbao = Array(
+                    "text"      => "Cập nhật lĩnh vực thành công",
+                    "icon"   => "info",
+                    
+                );
+                return back()->with('msg', $thongbao);
             }
             return back()
                     ->withErrors('Cập nhật lĩnh vực thất bại')
@@ -181,7 +191,11 @@ class LinhVucController extends Controller
             $linhvuc = LinhVuc::findOrFail($id);
             $kq = $linhvuc->delete();
             if ($kq) {
-                return back()->with('msg', 'Xoá lĩnh vực thành công');
+                $thongbao = Array(
+                    "text"      => "Xoá lĩnh vực thành công",
+                    "icon"   => "warning",
+                );
+                return back()->with('msg', $thongbao);
             }
             return back()->withErrors('Xoá lĩnh vực thất bại');
         } catch (Exception $e) {

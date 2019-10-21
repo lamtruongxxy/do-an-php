@@ -7,6 +7,8 @@
 <link href="{{ asset('assets/libs/datatables/select.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/custombox/custombox.min.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+<!-- Jquery Toast css -->
+<link href="{{ asset('assets/libs/jquery-toast/jquery.toast.min.css') }}" rel="stylesheet" type="text/css" />
 @stop
 @section ('content')
 <!-- start page title -->
@@ -58,7 +60,7 @@
 										</button>
 										<button 
 										  type='submit'
-										  class='btn btn-danger waves-effect waves-light'>
+										  class='btn btn-danger waves-effect waves-light xoa-linh-vuc'>
 											<i class='far fa-trash-alt'></i>
 											Xoá
 										</button>
@@ -68,13 +70,11 @@
 						@endforeach
 					</tbody>
 				</table>
-
+				
 			</div> <!-- end card body-->
 		</div> <!-- end card -->
 	</div><!-- end col-->
 	<div class="col-5">
-		@include('components.success')
-		@include('components.errors')
 		<div class="card-box">
 			<h4 class="header-title">Thêm mới lĩnh vực</h4><br>
 			<form action="{{ route('linh-vuc.store') }}" method="POST" class="parsley-examples">
@@ -124,9 +124,11 @@
 				</form>
 			</div>
 		</div>
+		
 	</div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 @stop
 
 @push('scripts')
@@ -149,7 +151,8 @@
 <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}" type="text/javascript"></script>
 <!-- Plugin js-->
 <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
-
+<!-- Tost-->
+<script src="{{ asset('assets/libs/jquery-toast/jquery.toast.min.js') }}"></script>
 <!-- Validation init js-->
 <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
 <!-- third party js ends -->
@@ -173,6 +176,28 @@
         $("#id_linh_vuc").val(id);
         $("#ten_linh_vuc_edit").val(name);
     });
+
+		$(document).on('click', '.xoa-linh-vuc', function(e) {
+			e.preventDefault();
+			var th = $(this);
+			Swal.fire({
+				title: "Bạn có chắc muốn xoá?",
+				html: "<div class='text-secondary'>Lưu ý: Lĩnh vực bị xoá có thể khôi phục lại</div>",
+				type: "warning",
+				showCancelButton: !0,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Xác nhận",
+				cancelButtonText: "Huỷ bỏ"
+			}).then(function(t) {
+					if (t.value) {
+						th.parent().submit();
+					}
+			})
+		});
+		@include('components.toast')
 	});
+
+	
 </script>
 @endpush
