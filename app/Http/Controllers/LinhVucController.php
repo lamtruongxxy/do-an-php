@@ -189,6 +189,12 @@ class LinhVucController extends Controller
         // }
         try {
             $linhvuc = LinhVuc::findOrFail($id);
+            $dsCauHoi = \App\CauHoi::where('linh_vuc_id', $id)->get();
+            if (!is_null($dsCauHoi)) {
+                foreach($dsCauHoi as $cauhoi) {
+                    $cauhoi->delete();
+                }
+            }
             $kq = $linhvuc->delete();
             if ($kq) {
                 $thongbao = Array(
