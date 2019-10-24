@@ -16,6 +16,7 @@ class CreateLinhVucsTable extends Migration
         Schema::create('linh_vuc', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ten_linh_vuc');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateLinhVucsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('linh_vucs');
+        Schema::dropIfExists('linh_vuc');
     }
 }

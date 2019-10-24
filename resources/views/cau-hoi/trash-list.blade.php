@@ -6,7 +6,6 @@
 <link href="{{ asset('assets/libs/datatables/buttons.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/datatables/select.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/custombox/custombox.min.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
 @stop
 
 @section('content')
@@ -28,8 +27,6 @@
 <!-- end page title -->
 <div class="row">
 	<div class="col-12">
-		@include('components.errors')
-    	@include('components.success')
 		<div class="card">
 			<div class="card-body">
 				<table id="cau-hoi-datatable" class="table dt-responsive">
@@ -61,10 +58,10 @@
 								<form action="{{ route('cau-hoi.restore', ['id' => $cauhoi->id]) }}" method="POST">
 									@csrf
 									<div class="button-list">
-                               <button type="submit" class="btn btn-purple waves-effect waves-light">
-                                   <span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
-                               </button>
-                           </div> 
+											<button type="submit" class="btn btn-purple waves-effect waves-light khoi-phuc-cau-hoi">
+													<span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
+											</button>
+									</div> 
 								</form>
 							</td>
             </tr>
@@ -95,10 +92,6 @@
 <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
 <script src="{{ asset('assets/libs/pdfmake/vfs_fonts.js') }}"></script>
 <script src="{{ asset('assets/libs/custombox/custombox.min.js') }}"></script>
-<!-- sweetalert -->
-<script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}" type="text/javascript"></script>
-<!-- call ajax -->
-<script src="{{ asset('assets/libs/ajax/callAjax.js') }}" type="text/javascript"></script>
 <!-- Plugin js-->
 <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
 
@@ -106,5 +99,40 @@
 <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
 <!-- third party js ends -->
 <!-- Datatables init -->
-<script src="{{ asset('assets/js/pages/cau-hoi.js') }}"></script>
+<script>
+	$(document).ready(function() {
+		$('#cau-hoi-datatable').DataTable({
+			language: {
+					paginate: {
+							previous: "<i class='mdi mdi-chevron-left'>",
+							next: "<i class='mdi mdi-chevron-right'>"
+					}
+			},
+			drawCallback: function() {
+					$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+			},
+		});
+
+		// $(document).on('click', '.khoi-phuc-cau-hoi', function(e) {
+		// 	e.preventDefault();
+		// 	var th = $(this);
+		// 		Swal.fire({
+		// 			title: "Bạn có chắc muốn khôi phục?",
+		// 			html: "<div class='text-secondary'>Lưu ý: Lĩnh vực của câu hỏi nếu bị xoá sẽ được khôi phục lại</div>",
+		// 			type: "warning",
+		// 			showCancelButton: !0,
+		// 			confirmButtonColor: "#3085d6",
+		// 			cancelButtonColor: "#d33",
+		// 			confirmButtonText: "Xác nhận",
+		// 			cancelButtonText: "Huỷ bỏ"
+		// 		}).then(function(t) {
+		// 				if (t.value) {
+		// 					th.parents().eq(1).submit();
+		// 				}
+		// 		});
+		// })
+
+	});
+</script>
+@include('components.toast')
 @endpush

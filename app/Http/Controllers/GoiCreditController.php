@@ -131,7 +131,7 @@ class GoiCreditController extends Controller
                     ->findOrFail($id)
                     ->restore();
             if ($kq) {
-                return back()->with('msg', 'Khôi phục gió credit thành công');
+                return back()->with('msg', 'Khôi phục gói credit thành công');
             }
             return back()->withErrors('Khôi phục gói credit thất bại');
         } catch (Exception $ex) {

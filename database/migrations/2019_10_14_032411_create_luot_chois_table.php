@@ -15,7 +15,9 @@ class CreateLuotChoisTable extends Migration
     {
         Schema::create('luot_choi', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_nguoi_choi');
+            $table->integer('nguoi_choi_id');
+            $table->integer('so_cau');
+            $table->integer('diem');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateLuotChoisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('luot_chois');
+        Schema::dropIfExists('luot_choi');
     }
 }

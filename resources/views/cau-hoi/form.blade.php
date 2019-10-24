@@ -22,8 +22,6 @@
 
 <div class="row">
   <div class="col-lg-6">
-    @include('components.success')
-    @include('components.errors')
     <div class="card-box">
       <form 
         action="{{ isset($cauhoi) ? route('cau-hoi.update', ['id' => $cauhoi->id]) : route('cau-hoi.store') }}" 
@@ -101,7 +99,7 @@
                 id="dap_an_a" 
                 value="A" 
                 name="dap_an" 
-                {{ isset($cauhoi) && $cauhoi->dap_an === 'a' ? 'checked' : '' }}>
+                {{ isset($cauhoi) && $cauhoi->dap_an === 'A' ? 'checked' : '' }}>
               <label for="dap_an_a">A</label>
           </div>
           <div class="radio radio-primary form-check-inline">
@@ -110,7 +108,7 @@
                 id="dap_an_b" 
                 value="B" 
                 name="dap_an"
-                {{ isset($cauhoi) && $cauhoi->dap_an === 'b' ? 'checked' : '' }}>
+                {{ isset($cauhoi) && $cauhoi->dap_an === 'B' ? 'checked' : '' }}>
               <label for="dap_an_b">B</label>
           </div>
           <div class="radio radio-primary form-check-inline">
@@ -119,7 +117,7 @@
                 id="dap_an_c" 
                 value="C" 
                 name="dap_an"
-                {{ isset($cauhoi) && $cauhoi->dap_an === 'c' ? 'checked' : '' }}>
+                {{ isset($cauhoi) && $cauhoi->dap_an === 'C' ? 'checked' : '' }}>
               <label for="dap_an_c">C</label>
           </div>
           <div class="radio radio-primary form-check-inline">
@@ -128,7 +126,7 @@
                 id="dap_an_d" 
                 value="D" 
                 name="dap_an"
-                {{ isset($cauhoi) && $cauhoi->dap_an === 'd' ? 'checked' : '' }}>
+                {{ isset($cauhoi) && $cauhoi->dap_an === 'D' ? 'checked' : '' }}>
               <label for="dap_an_d">D</label>
           </div>
         </div>
@@ -153,4 +151,5 @@
 
 <!-- Validation init js-->
 <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
+@include('components.toast')
 @endpush

@@ -6,9 +6,6 @@
 <link href="{{ asset('assets/libs/datatables/buttons.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/datatables/select.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/custombox/custombox.min.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
-<!-- Jquery Toast css -->
-<link href="{{ asset('assets/libs/jquery-toast/jquery.toast.min.css') }}" rel="stylesheet" type="text/css" />
 @stop
 @section ('content')
 <!-- start page title -->
@@ -151,12 +148,10 @@
 <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}" type="text/javascript"></script>
 <!-- Plugin js-->
 <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
-<!-- Tost-->
-<script src="{{ asset('assets/libs/jquery-toast/jquery.toast.min.js') }}"></script>
 <!-- Validation init js-->
 <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
 <!-- third party js ends -->
-<script type="text/javascript">
+<script>
 	$(document).ready(function() {
 		$("#linh-vuc-datatable").DataTable({
 			language: {
@@ -195,9 +190,7 @@
 					}
 			})
 		});
-		@include('components.toast')
 	});
-
-	
 </script>
+@include('components.toast')
 @endpush

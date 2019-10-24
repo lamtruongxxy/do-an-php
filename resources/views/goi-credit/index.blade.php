@@ -190,7 +190,7 @@
       },
     });
 
-        $(document).on('click', '.sua-goi-credit', function() {
+    $(document).on('click', '.sua-goi-credit', function() {
         var id = $(this).data('id');
         var ten = $(this).data('ten');
         var credit = $(this).data('credit');
@@ -200,6 +200,8 @@
         $("#so_credit").val(credit);
         $('#sotien').val(so_tien);
     });
+  
   });
 </script>
+@include('components.toast')
 @endpush
