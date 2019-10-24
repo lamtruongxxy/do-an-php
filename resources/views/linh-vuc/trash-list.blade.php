@@ -26,11 +26,9 @@
 
 <div class="row">
   <div class="col-12">
-    @include('components.errors')
-    @include('components.success')
       <div class="card">
           <div class="card-body">
-              <table id="basic-datatable" class="table nowrap">
+              <table id="linh-vuc-datatable" class="table nowrap">
                   <thead>
                       <tr>
                           <th>ID</th>
@@ -83,6 +81,20 @@
 <script src="{{ asset('assets/libs/pdfmake/vfs_fonts.js') }}"></script>
 <!-- third party js ends -->
 
-<!-- Datatables init -->
-<script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+<script>
+    $(document).ready(function() {
+		$("#linh-vuc-datatable").DataTable({
+			language: {
+            paginate: {
+                previous: "<i class='mdi mdi-chevron-left'>",
+                next: "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        drawCallback: function() {
+            $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+        },
+		});
+    });
+</script>
+@include('components.toast')
 @endpush

@@ -30,6 +30,6 @@ class CreateGoiCreditsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goi_credits');
+        Schema::dropIfExists('goi_credit');
     }
 }

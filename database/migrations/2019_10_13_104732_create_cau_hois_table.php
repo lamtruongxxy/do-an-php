@@ -34,6 +34,6 @@ class CreateCauHoisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cau_hois');
+        Schema::dropIfExists('cau_hoi');
     }
 }

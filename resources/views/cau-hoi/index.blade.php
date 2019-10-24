@@ -27,8 +27,6 @@
 <!-- end page title -->
 <div class="row">
 	<div class="col-12">
-		@include('components.success')
-		@include('components.errors')
 		<div class="card">
 			<div class="card-body">
 				<table id="cau-hoi-datatable" class="table dt-responsive">
@@ -50,7 +48,7 @@
 						<tr>
 							<td>{{ $cauhoi->id }}</td>
 							<td>{{ $cauhoi->noi_dung }}</td>
-							<td>{{ $cauhoi->linh_vuc_id }}</td>
+							<td>{{ $cauhoi->linhVuc->ten_linh_vuc }}</td>
 							<td>{{ $cauhoi->phuong_an_a }}</td>
 							<td>{{ $cauhoi->phuong_an_b }}</td>
 							<td>{{ $cauhoi->phuong_an_c }}</td>
@@ -61,7 +59,7 @@
 									@csrf
 									@method('DELETE')
 									<a  href="{{ route('cau-hoi.edit', ['id' => $cauhoi->id]) }}" class="btn btn-warning"><i class='far fa-edit'></i></a>
-									<button type="submit" class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+									<button type="submit" class="btn btn-danger xoa-cau-hoi"><i class='far fa-trash-alt'></i></button>
 								</form>
 							</td>
 						</tr>
@@ -96,6 +94,40 @@
 <!-- Plugin js-->
 <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
 <!-- third party js ends -->
-<!-- Datatables init -->
-<script src="{{ asset('assets/js/pages/cau-hoi.js') }}"></script>
+<script>
+	$(document).ready(function() {
+		$("#cau-hoi-datatable").DataTable({
+			language: {
+            paginate: {
+                previous: "<i class='mdi mdi-chevron-left'>",
+                next: "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        drawCallback: function() {
+            $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+        },
+		});
+
+		$(document).on('click', '.xoa-cau-hoi', function(e) {
+			e.preventDefault();
+			var th = $(this);
+				Swal.fire({
+					title: "Bạn có chắc muốn xoá?",
+					html: "<div class='text-secondary'>Lưu ý: Câu hỏi bị xoá có thể được khôi phục lại</div>",
+					type: "warning",
+					showCancelButton: !0,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Xác nhận",
+					cancelButtonText: "Huỷ bỏ"
+				}).then(function(t) {
+						if (t.value) {
+							th.parent().submit();
+						}
+				});
+		})
+
+	});
+</script>
+@include('components.toast')
 @endpush

@@ -122,7 +122,7 @@ class CauHoiController extends Controller
     public function destroy($id)
     {
         try {
-            $kq = CauHoi::findOrFail($id);
+            $kq = CauHoi::findOrFail($id)->delete();
             if ($kq) {
                 return back()->with('msg', 'Xoá câu hỏi thành công');
             }
@@ -135,10 +135,10 @@ class CauHoiController extends Controller
     public function restore($id)
     {
         try {
-            $kq = CauHoi::onlyTrashed()
-                    ->findOrFail($id)
-                    ->restore();
-            if ($kq) {
+            $cauHoi = CauHoi::onlyTrashed()->findOrFail($id);
+            $cauHoi->restore();
+            $linhVuc = LinhVuc::withTrashed()->findOrFail($cauHoi->linh_vuc_id)->restore();
+            if ($cauHoi && $linhVuc) {
                 return back()->with('msg', 'Khôi phục câu hỏi thành công');
             }
             return back()->withErrors('Khôi phục câu hỏi thất bại');

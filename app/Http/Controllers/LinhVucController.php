@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LinhVuc;
+use App\CauHoi;
 use Validator;
 use Illuminate\Validation\Rule;
 
@@ -70,7 +71,7 @@ class LinhVucController extends Controller
         // return back()->withErrors(['Thêm lĩnh vực thất bại'])->withInput();
         $kq = LinhVuc::create($request->all());
         if ($kq) {
-            return back()->with('msg', 'Thêm lĩnh vực thành công');
+            return back()->with('msg', "Thêm lĩnh vực thành công");
         }
         return back()
                 ->withErrors('Thêm lĩnh vực thất bại')
@@ -113,7 +114,7 @@ class LinhVucController extends Controller
             $linhvuc->ten_linh_vuc = $request->ten_linh_vuc;
             $kq = $linhvuc->save();
             if ($kq) {
-                return back()->with('msg', 'Cập nhật lĩnh vực thành công');
+                return back()->with('msg', "Cập nhật lĩnh vực thành công");
             }
             return back()
                     ->withErrors('Cập nhật lĩnh vực thất bại')
@@ -160,28 +161,12 @@ class LinhVucController extends Controller
      */
     public function destroy($id)
     {
-        // try {
-        //     $data = LinhVuc::findOrFail($id);
-        //     $result = $data->delete();
-        //     if ($result) {
-        //         $msg = [
-        //             'status' => true,
-        //             'msg'   => 'Xoá lĩnh vực thành công'
-        //         ];
-        //         return response()->json($msg);
-        //     }
-        // } catch (Exception $e) {
-        //     $msg = [
-        //         'status'    => false,
-        //         'msg'   => 'Xoá lĩnh vực thất bại'
-        //     ];
-        //     return response()->json($msg);
-        // }
         try {
             $linhvuc = LinhVuc::findOrFail($id);
-            $kq = $linhvuc->delete();
-            if ($kq) {
-                return back()->with('msg', 'Xoá lĩnh vực thành công');
+            $xoaDSCauHoi = CauHoi::where('linh_vuc_id', $id)->delete();
+            $xoaLinhVuc = $linhvuc->delete();
+            if ($xoaLinhVuc && $xoaDSCauHoi) {
+                return back()->with('msg', "Xoá lĩnh vực thành công");
             }
             return back()->withErrors('Xoá lĩnh vực thất bại');
         } catch (Exception $e) {
@@ -199,10 +184,10 @@ class LinhVucController extends Controller
     {
         try {
             $id = $request->id;
-            $kq = LinhVuc::onlyTrashed()
-                    ->findOrFail($id)
-                    ->restore();
-            if ($kq) {
+            $linhvuc = LinhVuc::onlyTrashed()->findOrFail($id);
+            $khoiPhucDSCauHoi = CauHoi::onlyTrashed()->where('deleted_at', $linhvuc->deleted_at)->restore();
+            $khoiPhucLinhVuc = $linhvuc->restore();
+            if ($khoiPhucLinhVuc && $khoiPhucDSCauHoi) {
                 return back()->with('msg', 'Khôi phục lĩnh vực thành công');
             }
             return back()->withErrors('Khôi phục lĩnh vực thất bại');

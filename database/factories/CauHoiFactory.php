@@ -6,7 +6,7 @@ use App\CauHoi;
 use Faker\Generator as Faker;
 
 $factory->define(CauHoi::class, function (Faker $faker) {
-	$dap_an = ['a', 'b', 'c', 'd'];
+	$dap_an = ['A', 'B', 'C', 'D'];
     return [
         'noi_dung'	=> $faker->sentence(),
         'linh_vuc_id'	=> App\LinhVuc::pluck('id')->random(),
