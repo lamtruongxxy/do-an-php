@@ -30,4 +30,6 @@ Route::namespace('API')->group(function() {
 	});
 
 	Route::get('nguoi-choi/{id}', 'NguoiChoiAPI@ChiTietNguoiChoi');
+
+	Route::get('/cau-hoi', 'CauHoiAPI@cauHoiTheoLinhVuc');
 });
