@@ -10,8 +10,12 @@ class NguoiChoiAPI extends Controller
 {
     public function ChiTietNguoiChoi($id)
     {
-    		$nguoichoi = NguoiChoi::find($id);
-    		return response()->json($nguoichoi, 200);
+				$nguoichoi = NguoiChoi::find($id);
+				$res = [
+					"success"	=> true,
+					"data"		=> $nguoichoi
+				];
+    		return response()->json($res, 200);
 		}
 		
     public function xepHang(Request $request)
@@ -23,6 +27,7 @@ class NguoiChoiAPI extends Controller
     								->take($limit)
 										->get();
 				$res = [
+					"success"	=> true,
 					"total"	=> NguoiChoi::count(),
 					"data"	=> $listNguoiChoi
 				];
@@ -31,7 +36,11 @@ class NguoiChoiAPI extends Controller
 
     public function LayDSNguoiChoi()
     {
-    	$dsNguoiChoi = NguoiChoi::all();
-    	return response()->json($dsNguoiChoi, 200);
+			$dsNguoiChoi = NguoiChoi::all();
+			$res = [
+				"success"	=> true,
+				"data"		=> $dsNguoiChoi
+			];
+    	return response()->json($res, 200);
     }
 }

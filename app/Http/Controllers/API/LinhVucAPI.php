@@ -12,16 +12,20 @@ class LinhVucAPI extends Controller
     public function DSLinhVuc()
     {
             $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc')->get()->random(4);
-            $kq = [
+            $res = [
                 'success' => true,
-                'dsLinhVuc' => $dsLinhVuc
+                'data' => $dsLinhVuc
             ];
-    		return response()->json($kq, 200);
+    		return response()->json($res, 200);
     }
 
     public function DSCauHoiTheoLinhVuc($id)
     {
-    		$dsCauHoi = LinhVuc::find($id)->dsCauHoi;
-    		return response()->json($dsCauHoi, 200);
+            $dsCauHoi = LinhVuc::find($id)->dsCauHoi;
+            $res = [
+                "success"   => true,
+                "data"      => $dsCauHoi
+            ];
+    		return response()->json($res, 200);
     }
 }

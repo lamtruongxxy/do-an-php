@@ -10,13 +10,21 @@ class GoiCreditAPI extends Controller
 {
     public function DSGoiCredit()
     {
-    		$dsGoiCredit = GoiCredit::all();
-    		return response()->json($dsGoiCredit, 200);
+            $dsGoiCredit = GoiCredit::all();
+            $res = [
+                "success"   => true,
+                "data"      => $dsGoiCredit
+            ];
+    		return response()->json($res, 200);
     }
 
     public function ChiTietGoiCredit($id)
     {
-    		$goicredit = GoiCredit::find($id);
-    		return response()->json($goicredit, 200);
+            $goicredit = GoiCredit::find($id);
+            $res = [
+                "success"   => true,
+                "data"      => $goicredit
+            ];
+    		return response()->json($res, 200);
     }
 }

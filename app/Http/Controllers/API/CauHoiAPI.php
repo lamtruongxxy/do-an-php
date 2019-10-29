@@ -12,10 +12,10 @@ class CauHoiAPI extends Controller
     {
         $linhVuc = $request->query('linh_vuc');
         $cauhoi = CauHoi::where('linh_vuc_id', $linhVuc)->get()->random(1);
-        $kq = [
+        $res = [
             'success' => true,
-            'cauhoi'    => $cauhoi
+            'data'    => $cauhoi
         ];
-        return \response()->json($kq);
+        return \response()->json($res, 200);
     }
 }
