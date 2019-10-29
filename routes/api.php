@@ -29,7 +29,11 @@ Route::namespace('API')->group(function() {
 		Route::get('/{id}', 'GoiCreditAPI@ChiTietGoiCredit');
 	});
 
-	Route::get('nguoi-choi/{id}', 'NguoiChoiAPI@ChiTietNguoiChoi');
+	Route::prefix('nguoi-choi')->group(function() {
+		Route::get('/{id}', 'NguoiChoiAPI@ChiTietNguoiChoi');
+	});
+
+	Route::get('xep-hang', "NguoiChoiAPI@xepHang");
 
 	Route::get('/cau-hoi', 'CauHoiAPI@cauHoiTheoLinhVuc');
 });

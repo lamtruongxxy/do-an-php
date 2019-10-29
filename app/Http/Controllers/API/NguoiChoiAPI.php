@@ -13,4 +13,20 @@ class NguoiChoiAPI extends Controller
     		$nguoichoi = NguoiChoi::find($id);
     		return response()->json($nguoichoi, 200);
     }
+
+    public function xepHang(Request $request)
+    {
+    		$page = $request->query("page", 1);
+    		$limit = $request->query("limit", 25);
+    		$listNguoiChoi = NguoiChoi::orderBy('diem_cao_nhat', 'desc')
+    								->skip(($page - 1) * $limit)
+    								->take($limit)
+										->get();
+				$res = [
+					"total"	=> NguoiChoi::count(),
+					"data"	=> $listNguoiChoi
+				];
+    		return response()->json($res, 200);
+    }
+
 }
