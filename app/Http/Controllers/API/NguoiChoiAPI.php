@@ -12,8 +12,8 @@ class NguoiChoiAPI extends Controller
     {
     		$nguoichoi = NguoiChoi::find($id);
     		return response()->json($nguoichoi, 200);
-    }
-
+		}
+		
     public function xepHang(Request $request)
     {
     		$page = $request->query("page", 1);
@@ -29,4 +29,9 @@ class NguoiChoiAPI extends Controller
     		return response()->json($res, 200);
     }
 
+    public function LayDSNguoiChoi()
+    {
+    	$dsNguoiChoi = NguoiChoi::all();
+    	return response()->json($dsNguoiChoi, 200);
+    }
 }

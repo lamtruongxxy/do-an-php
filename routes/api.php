@@ -30,7 +30,8 @@ Route::namespace('API')->group(function() {
 	});
 
 	Route::prefix('nguoi-choi')->group(function() {
-		Route::get('/{id}', 'NguoiChoiAPI@ChiTietNguoiChoi');
+		Route::get('/', 'NguoiChoiAPI@LayDSNguoiChoi');
+		Route::get('/{id}', 'NguoiChoiAPI@ChiTietNguoiChoi');		
 	});
 
 	Route::get('xep-hang', "NguoiChoiAPI@xepHang");
