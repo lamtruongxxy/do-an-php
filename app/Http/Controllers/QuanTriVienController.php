@@ -9,20 +9,28 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class QuanTriVienController extends Controller
 {
-    use AuthenticatesUsers;
-    public function username()
+   public function getLogin()
+   {
+    return view("dang-nhap.index");
+   }
+
+   public function postLogin(Request $request)
+   {
+    $cen = $request->only("ten_dang_nhap","password");
+    if(Auth::attempt($cen))
     {
-        return 'ten_dang_nhap';
-    }
-    public function dangNhap()
-    {
-        return view('dang-nhap');
+        return redirect()->route('linh-vuc.index');
     }
 
-    public function xuLyDangNhap(Request $request)
+    else
     {
-        $thongtin = $request->only(['ten_dang_nhap', 'mat_khau']);
-        dd(Auth::attempt($thongtin));
-        // dd($thongtin);
+        return back()->withInput();
     }
+   }
+
+   public function logout()
+   {
+    Auth::logout();
+    return  \redirect()->route("get-login");
+   }
 }
