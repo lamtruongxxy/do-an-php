@@ -21,3 +21,6 @@ Route::get("linh-vuc", "API\LinhVucAPI@layDSLinhVuc");
 
 Route::get("cau-hoi", "API\CauHoiAPI@layDSCauHoi");
 
+Route::get("xep-hang", "API\NguoiChoiAPI@layDSXepHang");
+
+
