@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(LinhVuc::class, function (Faker $faker) {
     return [
-        "ten_linh_vuc"	=> $faker->name
+        "ten_linh_vuc"	=> $faker->name,
+        "hinh_anh"      => "http://lorempixel.com/200/200/"
     ];
 });
