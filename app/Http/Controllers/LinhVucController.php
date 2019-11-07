@@ -7,17 +7,14 @@ use App\LinhVuc;
 use App\CauHoi;
 use Validator;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class LinhVucController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc')->get();
+        $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc', 'hinh_anh')->get();
         return view('linh-vuc.index', compact('dsLinhVuc'));
     }
 
@@ -33,43 +30,15 @@ class LinhVucController extends Controller
     //             ->make(true);
     // }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // $rule = [
-        //     'ten_linh_vuc'  => ['required', 'unique:linh_vuc']
-        // ];
-        // $message = [
-        //     'ten_linh_vuc.required' => 'Tên lĩnh vực không để trống',
-        //     'ten_linh_vuc.unique'   => "Tên lĩnh vực đã tồn tại"
-        // ];
-        // $valid = Validator::make($request->all(), $rule, $message);
-        // if ($valid->fails()) {
-        //     return back()->withErrors([$valid->errors()->all()])->withInput();
-        // }
-        // $result = LinhVuc::create([
-        //     'ten_linh_vuc'  => $request->ten_linh_vuc
-        // ]);
-        // if ($result) {
-        //     return back()->with('msg', 'Thêm lĩnh vực thành công');
-        // }
-        // return back()->withErrors(['Thêm lĩnh vực thất bại'])->withInput();
-        $kq = LinhVuc::create($request->all());
+        # Upload hình
+        $hinh_anh = $this->uploadHinh($request->file('hinh_anh'));
+        $linh_vuc = [
+            'ten_linh_vuc'  => $request->ten_linh_vuc,
+            'hinh_anh'      => $hinh_anh
+        ];
+        $kq = LinhVuc::create($linh_vuc);
         if ($kq) {
             return back()->with('msg', "Thêm lĩnh vực thành công");
         }
@@ -77,54 +46,33 @@ class LinhVucController extends Controller
                 ->withErrors('Thêm lĩnh vực thất bại')
                 ->withInput();
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request)
     {
-        try {
+        try 
+        {
             $linhvuc = LinhVuc::findOrFail($request->id);
+            if ($request->file('hinh_anh_new')) 
+            {
+                $this->xoaHinh($linhvuc->hinh_anh);
+                $linhvuc->hinh_anh = $this->uploadHinh($request->file('hinh_anh_new'));
+            }
             $linhvuc->ten_linh_vuc = $request->ten_linh_vuc;
             $kq = $linhvuc->save();
-            if ($kq) {
+            if ($kq) 
+            {
                 return back()->with('msg', "Cập nhật lĩnh vực thành công");
             }
             return back()
                     ->withErrors('Cập nhật lĩnh vực thất bại')
                     ->withInput();
-        } catch (Exception $e) {
+        } catch (Exception $e) 
+        {
             return back()
                     ->withErrors('Có lỗi xảy ra, mời thử lại sau')
                     ->withInput();
         }
-        
+
         // $rule = [
         //     'id'            => ['required', 'exists:linh_vuc,id'],
         //     'ten_linh_vuc'  => [
@@ -153,12 +101,7 @@ class LinhVucController extends Controller
     //     $linh_vuc->save();
     //     return ['success' => "Cập nhật thành công"];
     // }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
         try {
@@ -172,6 +115,7 @@ class LinhVucController extends Controller
         } catch (Exception $e) {
             return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
         }
+
     }
 
     public function trashList()
@@ -182,17 +126,41 @@ class LinhVucController extends Controller
 
     public function restore(Request $request)
     {
-        try {
+        try 
+        {
             $id = $request->id;
             $linhvuc = LinhVuc::onlyTrashed()->findOrFail($id);
             $khoiPhucDSCauHoi = CauHoi::onlyTrashed()->where('deleted_at', $linhvuc->deleted_at)->restore();
             $khoiPhucLinhVuc = $linhvuc->restore();
-            if ($khoiPhucLinhVuc && $khoiPhucDSCauHoi) {
+            if ($khoiPhucLinhVuc && $khoiPhucDSCauHoi) 
+            {
                 return back()->with('msg', 'Khôi phục lĩnh vực thành công');
             }
             return back()->withErrors('Khôi phục lĩnh vực thất bại');
-        } catch (Exception $ex) {
+        } 
+        catch (Exception $ex) 
+        {
             return back()->withErrors('Có lỗi xãy ra, mời thử lại sau');
         }
     }
+
+    public function uploadHinh($img)
+    {
+        $type_img = $img->getClientOriginalExtension();
+        $date = Carbon::now('Asia/Ho_Chi_Minh')->format('dmyHis');
+        $new_img = $date. '-linh-vuc.' .$type_img;
+        $img->storeAs('public/linh-vuc', $new_img);
+        return $new_img;
+    }
+
+    public function xoaHinh($img)
+    {
+        $path = '/public/linh-vuc/' . $img;
+        $isExists = Storage::disk('local')->exists($path);
+        if ($isExists)
+        {
+            Storage::disk('local')->delete($path);
+        }
+    }
+
 }

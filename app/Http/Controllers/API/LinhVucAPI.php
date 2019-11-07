@@ -11,7 +11,7 @@ class LinhVucAPI extends Controller
 	// protected $dateFormat = 'd/m/Y H:i:s';
     public function DSLinhVuc()
     {
-            $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc', 'hinh_anh')->get()->random(4);
+            $dsLinhVuc = LinhVuc::select('id', 'ten_linh_vuc', 'hinh_anh')->get()->random(2);
             $res = [
                 'success' => true,
                 'data' => $dsLinhVuc

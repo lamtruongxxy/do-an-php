@@ -31,9 +31,10 @@
 				<table id="linh-vuc-datatable" class="table nowrap">
 					<thead>
 						<tr>
-							<th width="20%">ID</th>
-							<th width="50%">Tên lĩnh vực</th>
-							<th width="30%"></th>
+							<th width="">ID</th>
+							<th width="">Tên lĩnh vực</th>
+							<th>Hình ảnh</th>
+							<th width=""></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -41,6 +42,9 @@
 							<tr>
 								<td>{{ $linhvuc->id }}</td>
 								<td>{{ $linhvuc->ten_linh_vuc }}</td>
+								<td>
+									<img src="{{ asset('storage') }}/linh-vuc/{{ $linhvuc->hinh_anh }}" width="45"/>
+								</td>
 								<td>
 									<form action="{{ route('linh-vuc.remove', ['id' => $linhvuc->id ]) }}" method="POST">
 										@csrf
@@ -51,7 +55,8 @@
 										  data-toggle='modal'
 										  data-target='#form-edit'
 										  data-id='{{ $linhvuc->id }}'
-										  data-name='{{ $linhvuc->ten_linh_vuc }}'>
+											data-name='{{ $linhvuc->ten_linh_vuc }}'
+											data-img='{{ $linhvuc->hinh_anh }}'>
 											<i class='far fa-edit'></i>
 											Sửa
 										</button>
@@ -74,13 +79,16 @@
 	<div class="col-5">
 		<div class="card-box">
 			<h4 class="header-title">Thêm mới lĩnh vực</h4><br>
-			<form action="{{ route('linh-vuc.store') }}" method="POST" class="parsley-examples">
+			<form action="{{ route('linh-vuc.store') }}" method="POST" class="parsley-examples" enctype="multipart/form-data">
 				@csrf
 				<div class="form-group">
 					<label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
 					<input type="text" name="ten_linh_vuc" value="{{ old('ten_linh_vuc') }}" parsley-trigger="change" required placeholder="Nhập tên lĩnh vực" class="form-control" id="ten_linh_vuc">
 				</div>
-
+				<div class="form-group">
+					<label for="userName">Hình ảnh<span class="text-danger">*</span></label>
+					<input type="file" name="hinh_anh" class="form-control-file">
+				</div>
 				<div class="form-group text-right mb-0">
 					<button class="btn btn-primary waves-effect waves-light" type="submit">
 						<i class="fas fa-plus"></i>
@@ -102,13 +110,18 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			</div>
 			<div class="modal-body">
-				<form action="{{ route('linh-vuc.update') }}" method="POST" class="parsley-examples" id="form_edit">
+				<form action="{{ route('linh-vuc.update') }}" method="POST" class="parsley-examples" id="form_edit" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					<input type="hidden" name="id" id="id_linh_vuc" value="">
 					<div class="form-group">
 						<label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
 						<input type="text" name="ten_linh_vuc" parsley-trigger="change" required placeholder="Enter user name" class="form-control" id="ten_linh_vuc_edit" value="">
+					</div>
+					<div class="form-group">
+						<label for="userName">Hình ảnh<span class="text-danger">*</span></label>
+						<img src="" width="100" id="hinh_anh_edit"/><p></p>
+						<input type="file" name="hinh_anh_new" id="linh_vuc_edit" class="form-control-file">
 					</div>
 					<div class="form-group text-right mb-0">
 						<button class="btn btn-primary waves-effect waves-light mr-1" id="sua_linh_vuc" type="submit">
@@ -168,8 +181,10 @@
 		$(document).on('click', '.sua-linh-vuc', function() {
         var id = $(this).data('id');
         var name = $(this).data('name');
+				var img = $(this).data('img');
         $("#id_linh_vuc").val(id);
         $("#ten_linh_vuc_edit").val(name);
+				$("#hinh_anh_edit").attr('src', "{{ asset('storage') }}/linh-vuc/" + img);
     });
 
 		$(document).on('click', '.xoa-linh-vuc', function(e) {
@@ -190,6 +205,17 @@
 					}
 			})
 		});
+
+		$(document).on('change', '#linh_vuc_edit', function(e) {
+			if (this.files && this.files[0]) {
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					$("#hinh_anh_edit").attr('src', e.target.result);
+				}
+				reader.readAsDataURL(this.files[0]);
+			}
+		});
+		
 	});
 </script>
 @include('components.toast')
