@@ -42,8 +42,8 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+            'driver' => 'jwt',
+            'provider' => 'player',
             'hash' => false,
         ],
     ],
@@ -70,6 +70,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\QuanTriVien::class,
         ],
+
+        'player' => [
+            'driver'  => 'eloquent',
+            'model'   => App\NguoiChoi::class
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

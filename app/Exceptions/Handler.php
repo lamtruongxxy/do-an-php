@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,33 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof UnauthorizedHttpException) {
+            $preException = $exception->getPrevious();
+            if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException)
+            {
+                return response()->json([
+                    'success'   => false,
+                    'msg'       => 'Lỗi mã xác thực đã hết hạn'
+                ], 401);
+            }
+            else if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException)
+            {
+                return response()->json([
+                    'success'   => false,
+                    'msg'       => 'Lỗi mã xác thực không đúng'
+                ], 401);
+            }
+            else if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException) {
+                return response()->json(['error' => 'TOKEN_BLACKLISTED']);
+            }
+        }
+        if ($exception->getMessage() === 'Token not provided')
+        {
+            return response()->json([
+                'success'   => false,
+                'msg'       => 'Lỗi truy cập thất bại'
+            ], 401);
+        }
         return parent::render($request, $exception);
     }
 }

@@ -1,4 +1,5 @@
 @extends('master')
+@section('title', 'Xử lý câu hỏi')
 @section('css')
 @parent
 @stop

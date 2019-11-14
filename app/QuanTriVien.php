@@ -10,17 +10,14 @@ class QuanTriVien extends Authenticatable
 {
 	use SoftDeletes;
 
+    protected $table = 'quan_tri_vien';
 
-    protected $table='quan_tri_vien';
-
-
-    protected $fillable=[
-    	'ten_dang_nhap','mat_khau','ho_ten'
+    protected $fillable = [
+    	'ten_dang_nhap', 'mat_khau', 'ho_ten'
     ];
 
-    protected $hidden=[
+    protected $hidden = [
     	'mat_khau'
-
     ];
 
     public function getAuthPassword()

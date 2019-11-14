@@ -1,4 +1,5 @@
 @extends ('master')
+@section('title', 'Danh sách lĩnh vực')
 @section ('css')
 @parent
 <link href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
