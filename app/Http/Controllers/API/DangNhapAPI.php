@@ -26,9 +26,21 @@ class DangNhapAPI extends Controller
             'success'   => true,
             'msg'       => 'Đăng nhập thành công',
             'token'     => $token,
-            'type'      => 'bearer', // you can ommit this
+            'type'      => 'Bearer', // you can ommit this
             'expires'   => auth('api')->factory()->getTTL() * 60 * 24 * 7
         ];
+        return \response()->json($res, 200);
+    }
+
+    public function dangXuat()
+    {
+        auth('api')->logout();
+
+        $res = [
+            'success'   => true,
+            'msg'       => 'Đăng xuất thành công'
+        ];
+
         return \response()->json($res, 200);
     }
 }
