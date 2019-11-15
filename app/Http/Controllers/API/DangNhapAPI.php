@@ -19,7 +19,7 @@ class DangNhapAPI extends Controller
                 'success'   => false,
                 'msg'       => 'Đăng nhập thất bại, mời thử lại'
             ];
-            return \response()->json($res, 401);
+            return \response()->json($res);
         }
 
         $res = [
@@ -29,7 +29,7 @@ class DangNhapAPI extends Controller
             'type'      => 'Bearer', // you can ommit this
             'expires'   => auth('api')->factory()->getTTL() * 60 * 24 * 7
         ];
-        return \response()->json($res, 200);
+        return \response()->json($res);
     }
 
     public function dangXuat()
@@ -41,6 +41,6 @@ class DangNhapAPI extends Controller
             'msg'       => 'Đăng xuất thành công'
         ];
 
-        return \response()->json($res, 200);
+        return \response()->json($res);
     }
 }

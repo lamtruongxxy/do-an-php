@@ -15,7 +15,7 @@ class NguoiChoiAPI extends Controller
 					"success"	=> true,
 					"data"		=> $nguoichoi
 				];
-    		return response()->json($res, 200);
+    		return response()->json($res);
 		}
 		
     public function xepHang(Request $request)
@@ -31,7 +31,7 @@ class NguoiChoiAPI extends Controller
 					"total"	=> NguoiChoi::count(),
 					"data"	=> $listNguoiChoi
 				];
-    		return response()->json($res, 200);
+    		return response()->json($res);
     }
 
     public function LayDSNguoiChoi()
@@ -41,6 +41,6 @@ class NguoiChoiAPI extends Controller
 				"success"	=> true,
 				"data"		=> $dsNguoiChoi
 			];
-    	return response()->json($res, 200);
+    	return response()->json($res);
     }
 }

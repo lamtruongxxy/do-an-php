@@ -15,7 +15,7 @@ class GoiCreditAPI extends Controller
                 "success"   => true,
                 "data"      => $dsGoiCredit
             ];
-    		return response()->json($res, 200);
+    		return response()->json($res);
     }
 
     public function ChiTietGoiCredit($id)
@@ -25,6 +25,6 @@ class GoiCreditAPI extends Controller
                 "success"   => true,
                 "data"      => $goicredit
             ];
-    		return response()->json($res, 200);
+    		return response()->json($res);
     }
 }

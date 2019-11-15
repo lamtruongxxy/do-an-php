@@ -24,6 +24,6 @@ class LinhVucAPI extends Controller
             'data'      => $dsLinhVuc,
             'msg'       => 'Load lĩnh vực thành công'
         ];
-        return response()->json($res, 200);
+        return response()->json($res);
     }
 }

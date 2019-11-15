@@ -21,7 +21,7 @@ class CauHoiAPI extends Controller
                 'msg'     => 'Load câu hỏi thành công',
                 'data'    => $cauhoi->random(1)->first()
             ];
-            return \response()->json($res, 200);
+            return \response()->json($res);
         }
 
         $res = [
