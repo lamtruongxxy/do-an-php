@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::namespace('API')->group(function() {
 
-	Route::middleware('jwt.auth')->group(function() {
+	Route::middleware(['assign.guard:api','jwt.auth'])->group(function() {
 
 		Route::prefix('linh-vuc')->group(function() {
 			Route::get('/', 'LinhVucAPI@DSLinhVuc');
