@@ -79,22 +79,24 @@
       </div> <!-- end card body-->
     </div> <!-- end card -->
   </div><!-- end col-->
+
   <div class="col-5">
+     @include('components.errors')
     <div class="card-box">
       <h4 class="header-title">Thêm mới gói credit</h4><br>
       <form action="{{ route('goi-credit.store') }}" method="POST" class="parsley-examples">
         @csrf
         <div class="form-group">
           <label for="userName">Tên gói credit<span class="text-danger">*</span></label>
-          <input type="text" parsley-trigger="change" required placeholder="Nhập tên gói credit" class="form-control" id="ten_goi" name="ten_goi">
+          <input type="text" parsley-trigger="change" placeholder="Nhập tên gói credit" class="form-control" id="ten_goi" name="ten_goi">
         </div>
         <div class="form-group">
           <label for="userName">Credit<span class="text-danger">*</span></label>
-          <input type="number" parsley-trigger="change" required placeholder="Nhập số credit" class="form-control" id="credit" name="credit">
+          <input type="number" parsley-trigger="change" placeholder="Nhập số credit" class="form-control" id="credit" name="credit">
         </div>
         <div class="form-group">
           <label for="userName">Số tiền<span class="text-danger">*</span></label>
-          <input type="number" parsley-trigger="change" required placeholder="Nhập số tiền" class="form-control" id="so_tien" name="so_tien">
+          <input type="number" parsley-trigger="change" placeholder="Nhập số tiền" class="form-control" id="so_tien" name="so_tien">
         </div>
         <div class="form-group text-right mb-0">
           <button class="btn btn-primary waves-effect waves-light" type="submit">

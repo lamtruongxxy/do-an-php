@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CauHoi;
 use App\LinhVuc;
 use Illuminate\Http\Request;
+use App\Http\Requests\CauHoiRequest;
 
 class CauHoiController extends Controller
 {
@@ -42,7 +43,7 @@ class CauHoiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CauHoiRequest $request)
     {
         try {
             $kq = CauHoi::create($request->all());

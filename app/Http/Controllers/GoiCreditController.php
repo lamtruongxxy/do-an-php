@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GoiCredit;
 use Illuminate\Http\Request;
+use App\Http\Requests\GoiCreditRequest;
 
 class GoiCreditController extends Controller
 {
@@ -40,7 +41,7 @@ class GoiCreditController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GoiCreditRequest $request)
     {
         $kq = GoiCredit::create($request->all());
         if($kq)

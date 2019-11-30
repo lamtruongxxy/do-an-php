@@ -9,6 +9,7 @@ use Validator;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\LinhVucRequest;
 
 class LinhVucController extends Controller
 {
@@ -30,7 +31,7 @@ class LinhVucController extends Controller
     //             ->make(true);
     // }
 
-    public function store(Request $request)
+    public function store(LinhVucRequest $request)
     {
         # Upload hình
         $hinh_anh = $this->uploadHinh($request->file('hinh_anh'));
