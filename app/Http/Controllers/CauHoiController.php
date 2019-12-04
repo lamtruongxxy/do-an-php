@@ -45,6 +45,7 @@ class CauHoiController extends Controller
      */
     public function store(CauHoiRequest $request)
     {
+        // dd($request->dap_an);
         try {
             $kq = CauHoi::create($request->all());
             if ($kq) {
@@ -58,6 +59,7 @@ class CauHoiController extends Controller
                     ->withErrors('Có lỗi xảy ra, mời thử lại sau')
                     ->withInput();
         }
+        // dd($request->dap_an);
     }
 
     /**

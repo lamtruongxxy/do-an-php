@@ -20,9 +20,9 @@
     </div>
   </div>
 </div>
-@include('components.errors')
 <div class="row">
   <div class="col-lg-6">
+  @include('components.errors')
     <div class="card-box">
       <form 
         action="{{ isset($cauhoi) ? route('cau-hoi.update', ['id' => $cauhoi->id]) : route('cau-hoi.store') }}" 
