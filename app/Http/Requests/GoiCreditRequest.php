@@ -35,7 +35,7 @@ class GoiCreditRequest extends FormRequest
         return[
            "ten_goi.required" =>"Điền đầy đủ tên Credit",
            "credit.required" =>"Nhập số gói Credit",
-           "so_tien.required" =>"Nhấp số tiền Credit",
+           "so_tien.required" =>"Nhập số tiền Credit",
 
            "ten_goi.min"=>"Tên gói Credit từ 3 ký tự trở lên",
            "credit.unique"=>"Số Credit đã tồn tại",

@@ -109,7 +109,7 @@ class LinhVucController extends Controller
             $linhvuc = LinhVuc::findOrFail($id);
             $xoaDSCauHoi = CauHoi::where('linh_vuc_id', $id)->delete();
             $xoaLinhVuc = $linhvuc->delete();
-            if ($xoaLinhVuc && $xoaDSCauHoi) {
+            if ($xoaLinhVuc || $xoaDSCauHoi) {
                 return back()->with('msg', "Xoá lĩnh vực thành công");
             }
             return back()->withErrors('Xoá lĩnh vực thất bại');
@@ -150,13 +150,13 @@ class LinhVucController extends Controller
         $type_img = $img->getClientOriginalExtension();
         $date = Carbon::now('Asia/Ho_Chi_Minh')->format('dmyHis');
         $new_img = $date. '-linh-vuc.' .$type_img;
-        $img->storeAs('public/linh-vuc', $new_img);
+        $img->storeAs('linh-vuc', $new_img);
         return $new_img;
     }
 
     public function xoaHinh($img)
     {
-        $path = '/public/linh-vuc/' . $img;
+        $path = '/linh-vuc/' . $img;
         $isExists = Storage::disk('local')->exists($path);
         if ($isExists)
         {

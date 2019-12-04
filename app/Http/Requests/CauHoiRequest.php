@@ -36,7 +36,7 @@ class CauHoiRequest extends FormRequest
 
     public function messages()
     {
-        return[
+        return [
         "noi_dung.required" =>"Điền đầy đủ nội dung",
         "phuong_an_a.required" =>"Điền phương án a",
         "phuong_an_b.required" =>"Điền phương án b",
@@ -50,10 +50,10 @@ class CauHoiRequest extends FormRequest
         "phuong_an_c.min" =>"Phương án c từ 3 ký tự trở lên",
         "phuong_an_d.min" =>"Phương án d từ 3 ký tự trở lên",
 
-         "phuong_an_a.max" =>"Phương án a từ 20 ký tự trở xuống",
-        "phuong_an_b.max" =>"Phương án b từ 20 ký tự trở xuống",
-        "phuong_an_c.max" =>"Phương án c từ 20 ký tự trở xuống",
-        "phuong_an_d.max" =>"Phương án d từ 20 ký tự trở xuống"
+         "phuong_an_a.max" =>"Phương án a tối đa 20 ký tự",
+        "phuong_an_b.max" =>"Phương án b tối đa 20 ký tự",
+        "phuong_an_c.max" =>"Phương án c tối đa 20 ký tự",
+        "phuong_an_d.max" =>"Phương án d tối đa 20 ký tự"
 
         ];
     }

@@ -25,7 +25,7 @@ class DangNhapRequest extends FormRequest
     {
         return [
             "ten_dang_nhap" => "required|exists:quan_tri_vien",
-            "password"      => "required"
+            "password"      => "required|min:5|max:20"
         ];
     }
 
@@ -35,7 +35,8 @@ class DangNhapRequest extends FormRequest
             "ten_dang_nhap.required"   => "Tên đăng nhập không được bỏ trống",
             "password.required"        => "Mật khẩu không được để trống",
             "ten_dang_nhap.exists"   => "Tên đăng nhập không tồn tại",
-            
+            "password.min"  => "Mật khẩu tối thiểu 5 ký tự",
+            "password.max"  => "Mật khẩu tối đa 20 ký tự"
         ];
     }
 }
