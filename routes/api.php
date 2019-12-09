@@ -42,7 +42,8 @@ Route::namespace('API')->group(function() {
 	
 
 	});
-
+	
+	Route::post('dang-ky', 'DangNhapAPI@dangKy');
 	Route::post('dang-nhap', 'DangNhapAPI@dangNhap');
 
 

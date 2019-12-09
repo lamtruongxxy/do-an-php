@@ -43,4 +43,20 @@ class NguoiChoiAPI extends Controller
 			];
     	return response()->json($res);
     }
+
+    public function lichSuNguoiChoi(Request $request)
+{
+		$page = $request->query("page", 1);
+		$limit = $request->query("limit", 25);
+		$listLuotChoi = ChiTietLuotChoi::orderBy('diem', 'desc')
+								->skip(($page - 1) * $limit)
+								->take($limit)
+									->get();
+			$res = [
+				"success"	=> true,
+				"total"	=> ChiTietLuotChoi::count(),
+				"data"	=> $listLuotChoi
+			];
+		return response()->json($res);
+}
 }
