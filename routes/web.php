@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-	return view('linh-vuc.index');
-});
+Route::get('/', 'LinhVucController@index')->middleware("auth");
 
 Route::middleware("auth")->group(function(){ 
 	Route::prefix("linh-vuc")->group(function() {

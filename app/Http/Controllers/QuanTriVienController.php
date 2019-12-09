@@ -6,6 +6,7 @@ use App\QuanTriVien;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Requests\DangNhapRequest;
 
 class QuanTriVienController extends Controller
 {
@@ -14,7 +15,7 @@ class QuanTriVienController extends Controller
     return view("dang-nhap.index");
    }
 
-   public function postLogin(Request $request)
+   public function postLogin(DangNhapRequest $request)
    {
     $cen = $request->only("ten_dang_nhap","password");
     if(Auth::attempt($cen))
@@ -24,7 +25,7 @@ class QuanTriVienController extends Controller
 
     else
     {
-        return back()->withInput();
+        return back()->withInput()->withErrors("Sai mật khẩu");
     }
    }
 

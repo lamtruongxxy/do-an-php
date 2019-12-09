@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CauHoi;
 use App\LinhVuc;
 use Illuminate\Http\Request;
+use App\Http\Requests\CauHoiRequest;
 
 class CauHoiController extends Controller
 {
@@ -42,8 +43,9 @@ class CauHoiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CauHoiRequest $request)
     {
+        // dd($request->dap_an);
         try {
             $kq = CauHoi::create($request->all());
             if ($kq) {
@@ -57,6 +59,7 @@ class CauHoiController extends Controller
                     ->withErrors('Có lỗi xảy ra, mời thử lại sau')
                     ->withInput();
         }
+        // dd($request->dap_an);
     }
 
     /**

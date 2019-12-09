@@ -23,6 +23,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
+                        @include('components.errors')
                         <div class="card">
 
                             <div class="card-body p-4">
@@ -43,7 +44,7 @@
                                         <label for="ten_dang_nhap">Tên đăng nhập</label>
                                         <input class="form-control" 
                                         type="text" id="ten_dang_nhap" 
-                                        required="" 
+                                        
                                         placeholder="Nhập tên đăng nhập"
                                         name="ten_dang_nhap"
                                         value="{{ old('ten_dang_nhap') }}">
@@ -53,10 +54,11 @@
                                         <label for="password">Mật khẩu</label>
                                         <input class="form-control" 
                                         type="password" 
-                                        required="" 
+                                         
                                         id="password" 
                                         placeholder="Nhập mật khẩu" 
                                         name="password">
+
                                     </div>
 
                                     <div class="form-group mb-3">

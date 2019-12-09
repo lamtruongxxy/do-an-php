@@ -78,13 +78,20 @@
 		</div> <!-- end card -->
 	</div><!-- end col-->
 	<div class="col-5">
+		@include('components.errors')
 		<div class="card-box">
 			<h4 class="header-title">Thêm mới lĩnh vực</h4><br>
 			<form action="{{ route('linh-vuc.store') }}" method="POST" class="parsley-examples" enctype="multipart/form-data">
 				@csrf
 				<div class="form-group">
 					<label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
-					<input type="text" name="ten_linh_vuc" value="{{ old('ten_linh_vuc') }}" parsley-trigger="change" required placeholder="Nhập tên lĩnh vực" class="form-control" id="ten_linh_vuc">
+					<input type="text" 
+						name="ten_linh_vuc" 
+						value="{{ old('ten_linh_vuc') }}" 
+						parsley-trigger="change" 
+						placeholder="Nhập tên lĩnh vực" 
+						class="form-control" 
+						id="ten_linh_vuc">
 				</div>
 				<div class="form-group">
 					<label for="userName">Hình ảnh<span class="text-danger">*</span></label>
@@ -117,7 +124,8 @@
 					<input type="hidden" name="id" id="id_linh_vuc" value="">
 					<div class="form-group">
 						<label for="userName">Tên lĩnh vực<span class="text-danger">*</span></label>
-						<input type="text" name="ten_linh_vuc" parsley-trigger="change" required placeholder="Enter user name" class="form-control" id="ten_linh_vuc_edit" value="">
+						<input type="text" name="ten_linh_vuc" parsley-trigger="change" placeholder="Enter user name" class="form-control" id="ten_linh_vuc_edit" value="">
+						
 					</div>
 					<div class="form-group">
 						<label for="userName">Hình ảnh<span class="text-danger">*</span></label>

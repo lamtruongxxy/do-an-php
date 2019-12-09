@@ -9,6 +9,7 @@ use Validator;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\LinhVucRequest;
 
 class LinhVucController extends Controller
 {
@@ -30,7 +31,7 @@ class LinhVucController extends Controller
     //             ->make(true);
     // }
 
-    public function store(Request $request)
+    public function store(LinhVucRequest $request)
     {
         # Upload hình
         $hinh_anh = $this->uploadHinh($request->file('hinh_anh'));
@@ -108,7 +109,7 @@ class LinhVucController extends Controller
             $linhvuc = LinhVuc::findOrFail($id);
             $xoaDSCauHoi = CauHoi::where('linh_vuc_id', $id)->delete();
             $xoaLinhVuc = $linhvuc->delete();
-            if ($xoaLinhVuc && $xoaDSCauHoi) {
+            if ($xoaLinhVuc || $xoaDSCauHoi) {
                 return back()->with('msg', "Xoá lĩnh vực thành công");
             }
             return back()->withErrors('Xoá lĩnh vực thất bại');

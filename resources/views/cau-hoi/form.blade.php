@@ -20,9 +20,9 @@
     </div>
   </div>
 </div>
-
 <div class="row">
   <div class="col-lg-6">
+  @include('components.errors')
     <div class="card-box">
       <form 
         action="{{ isset($cauhoi) ? route('cau-hoi.update', ['id' => $cauhoi->id]) : route('cau-hoi.store') }}" 
@@ -34,7 +34,7 @@
         @endif
         <div class="form-group">
           <label for="userName">Nội dung<span class="text-danger">*</span></label>
-          <textarea class="form-control" name="noi_dung" parsley-trigger="change" required rows="3">{{ isset($cauhoi) ? $cauhoi->noi_dung : '' }}</textarea>
+          <textarea class="form-control" name="noi_dung" parsley-trigger="change" rows="3">{{ isset($cauhoi) ? $cauhoi->noi_dung : '' }}</textarea>
         </div>
         <div class="form-group">
           <label for="emailAddress">Lĩnh vực<span class="text-danger">*</span></label>
@@ -55,7 +55,7 @@
             type="text" 
             placeholder="Phương án A" 
             name="phuong_an_a" 
-            required 
+          
             class="form-control"
             value="{{ old('phuong_an_a', isset($cauhoi) ? $cauhoi->phuong_an_a : '') }}">
         </div>
@@ -66,7 +66,7 @@
             type="text" 
             placeholder="Phương án B" 
             name="phuong_an_b" 
-            required 
+             
             class="form-control"
             value="{{ old('phuong_an_b', isset($cauhoi) ? $cauhoi->phuong_an_b : '') }}">
         </div>
@@ -77,7 +77,7 @@
             type="text" 
             placeholder="Phương án C" 
             name="phuong_an_c" 
-            required 
+           
             class="form-control"
             value="{{ old('phuong_an_c', isset($cauhoi) ? $cauhoi->phuong_an_c : '') }}">
         </div>
@@ -88,7 +88,7 @@
             type="text" 
             placeholder="Phương án D" 
             name="phuong_an_d" 
-            required 
+            
             class="form-control"
             value="{{ old('phuong_an_d', isset($cauhoi) ? $cauhoi->phuong_an_d : '') }}">
         </div>
@@ -139,6 +139,10 @@
             Huỷ bỏ
           </button>
         </div>
+        <div col-5>
+          
+        </div>
+
 
       </form>
     </div> <!-- end card-box -->

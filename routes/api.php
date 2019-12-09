@@ -48,3 +48,13 @@ Route::namespace('API')->group(function() {
 
 
 });
+
+Route::namespace('API')->group(function() {
+
+	Route::prefix('linh-vuc')->group(function() {
+		Route::get('/', 'LinhVucAPI@DSLinhVuc');
+	});
+
+	Route::get('cau-hoi', 'CauHoiAPI@cauHoiTheoLinhVuc');
+
+});
