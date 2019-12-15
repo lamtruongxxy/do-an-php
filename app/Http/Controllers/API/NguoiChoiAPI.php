@@ -45,7 +45,7 @@ class NguoiChoiAPI extends Controller
     }
 
     public function lichSuNguoiChoi(Request $request)
-{
+	{
 		$page = $request->query("page", 1);
 		$limit = $request->query("limit", 25);
 		$listLuotChoi = ChiTietLuotChoi::orderBy('diem', 'desc')
@@ -58,5 +58,10 @@ class NguoiChoiAPI extends Controller
 				"data"	=> $listLuotChoi
 			];
 		return response()->json($res);
-}
+	}
+
+	public function capNhatNguoiChoi (Request $request)
+	{
+		
+	}
 }

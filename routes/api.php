@@ -29,6 +29,7 @@ Route::namespace('API')->group(function() {
 		Route::prefix('goi-credit')->group(function() {
 			Route::get('/', 'GoiCreditAPI@DSGoiCredit');
 			Route::get('/{id}', 'GoiCreditAPI@ChiTietGoiCredit');
+			Route::post('/mua-goi', 'GoiCreditAPI@muaGoiCredit');
 		});
 	
 		Route::prefix('nguoi-choi')->group(function() {
@@ -39,14 +40,15 @@ Route::namespace('API')->group(function() {
 		Route::get('xep-hang', "NguoiChoiAPI@xepHang");
 	
 		Route::get('cau-hoi', 'CauHoiAPI@cauHoiTheoLinhVuc');
-	
 
+		Route::post('luu-luot-choi', 'LuotChoiAPI@luuLuotChoi');
+	
+		
 	});
 	
 	Route::post('dang-ky', 'DangNhapAPI@dangKy');
 	Route::post('dang-nhap', 'DangNhapAPI@dangNhap');
-
-
+	
 });
 
 Route::namespace('API')->group(function() {
