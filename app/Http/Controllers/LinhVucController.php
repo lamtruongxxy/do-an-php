@@ -123,6 +123,7 @@ class LinhVucController extends Controller
     {
         $db = LinhVuc::onlyTrashed()->get();
         return view('linh-vuc.trash-list', compact('db'));
+        
     }
 
     public function restore(Request $request)

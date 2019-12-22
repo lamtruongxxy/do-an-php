@@ -62,6 +62,10 @@
 											<button type="submit" class="btn btn-purple waves-effect waves-light khoi-phuc-cau-hoi">
 													<span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
 											</button>
+
+											<button type="submit" class="btn btn-danger xoa-cau-hoi">
+                                      				<span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
+                                   		    </button>
 									</div> 
 								</form>
 							</td>
@@ -114,24 +118,24 @@
 			},
 		});
 
-		// $(document).on('click', '.khoi-phuc-cau-hoi', function(e) {
-		// 	e.preventDefault();
-		// 	var th = $(this);
-		// 		Swal.fire({
-		// 			title: "Bạn có chắc muốn khôi phục?",
-		// 			html: "<div class='text-secondary'>Lưu ý: Lĩnh vực của câu hỏi nếu bị xoá sẽ được khôi phục lại</div>",
-		// 			type: "warning",
-		// 			showCancelButton: !0,
-		// 			confirmButtonColor: "#3085d6",
-		// 			cancelButtonColor: "#d33",
-		// 			confirmButtonText: "Xác nhận",
-		// 			cancelButtonText: "Huỷ bỏ"
-		// 		}).then(function(t) {
-		// 				if (t.value) {
-		// 					th.parents().eq(1).submit();
-		// 				}
-		// 		});
-		// })
+		 $(document).on('click', '.xoa-cau-hoi', function(e) {
+		      e.preventDefault();
+		      var th = $(this);
+                Swal.fire({
+                        title: "Bạn có chắc muốn xoá?",
+                        html: "<div class='text-secondary'>Lưu ý: Câu hỏi bị xoá không thể khôi phục lại</div>",
+                        type: "warning",
+                        showCancelButton: !0,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Xác nhận",
+                        cancelButtonText: "Huỷ bỏ"
+                          }).then(function(t) {
+                              if (t.value) {
+                                th.parent().submit();
+                              }
+                          });
+            })
 
 	});
 </script>
