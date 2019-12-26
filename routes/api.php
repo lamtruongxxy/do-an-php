@@ -39,7 +39,7 @@ Route::namespace('API')->group(function() {
 	
 		Route::get('xep-hang', "NguoiChoiAPI@xepHang");
 	
-		Route::get('cau-hoi', 'CauHoiAPI@cauHoiTheoLinhVuc');
+		Route::get('cau-hoi/{id}', 'CauHoiAPI@cauHoiTheoLinhVuc');
 
 		Route::post('luu-luot-choi', 'LuotChoiAPI@luuLuotChoi');
 	
