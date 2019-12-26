@@ -15,7 +15,8 @@ class NguoiChoi extends Authenticatable implements JWTSubject
     protected $fillable = [
         'ten_dang_nhap', 
         'mat_khau', 
-        'email', 
+        'email',
+        'ho_ten',
         'hinh_dai_dien', 
         'diem_cao_nhat', 
         'credit'
