@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\NguoiChoi;
 use App\ChiTietLuotChoi;
+use App\LuotChoi;
 use App\Jobs\SendMailForgotPwd;
 
 use Carbon\Carbon;
@@ -55,17 +56,21 @@ class NguoiChoiAPI extends Controller
     	return response()->json($res);
     }
 
-    public function lichSuNguoiChoi(Request $request)
+    public function lichSuNguoiChoi($id)
 	{
-		$page = $request->query("page", 1);
-		$limit = $request->query("limit", 25);
-		$listLuotChoi = ChiTietLuotChoi::orderBy('diem', 'desc')
-								->skip(($page - 1) * $limit)
-								->take($limit)
-									->get();
+		$page = 1;
+		$limit =25;
+		// $listLuotChoi = ChiTietLuotChoi::orderBy('diem', 'desc')
+		// 						->skip(($page - 1) * $limit)
+		// 						->take($limit)
+		// 							->get();
+        $listLuotChoi = LuotChoi::where('nguoi_choi_id',$id)->orderBy('diem', 'desc')
+                             ->skip(($page - 1) * $limit)
+                             ->take($limit)
+                                 ->get();
 			$res = [
 				"success"	=> true,
-				"total"	=> ChiTietLuotChoi::count(),
+				"total"	=> count($listLuotChoi),
 				"data"	=> $listLuotChoi
 			];
 		return response()->json($res);

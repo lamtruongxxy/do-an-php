@@ -37,6 +37,7 @@ Route::namespace('API')->group(function() {
 		});
 	
 		Route::get('xep-hang', "NguoiChoiAPI@xepHang");
+		Route::get('lich-su-choi/{id}', "NguoiChoiAPI@lichSuNguoiChoi");
 	
 		Route::get('cau-hoi/{id}', 'CauHoiAPI@cauHoiTheoLinhVuc');
 
