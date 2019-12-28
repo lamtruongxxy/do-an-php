@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,8 +45,9 @@ Route::namespace('API')->group(function() {
 		
 	});
 	
-	Route::post('dang-ky', 'DangNhapAPI@dangKy');
-	Route::post('dang-nhap', 'DangNhapAPI@dangNhap');
+	Route::post('dang-ky', 'NguoiChoiAPI@dangKy');
+	Route::post('dang-nhap', 'NguoiChoiAPI@dangNhap');
+	Route::post('quen-mat-khau', 'NguoiChoiAPI@sendMail');
 	
 });
 
