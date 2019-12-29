@@ -108,6 +108,28 @@ class NguoiChoiAPI extends Controller
         return \response()->json($res);
     }
 
+    public function confirmCode(Request $request){
+        $date = Carbon::now();
+        $record= QuenMatKhau::Where('email', $request->email)
+                                    ->Where('ma_xac_nhan', $request->ma_xac_nhan)
+                                    ->first();
+        $hanSuDung = $record->han_su_dung;                      
+        if($date->lte($hanSuDung))
+        {
+            $res = [
+                'success' => true,
+                'msg'     => 'Mã xác nhận hợp lệ'
+            ];
+            return response()->json($res);
+        }
+
+        $res = [
+               'success' => false,
+               'msg'     => 'Mã xác nhận sai hoặc hết hạn, vui lòng thử lại'
+        ];
+        return response()->json($res);
+    }
+
     public function dangXuat()
     {
         auth('api')->logout();

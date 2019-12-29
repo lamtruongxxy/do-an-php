@@ -49,6 +49,7 @@ Route::namespace('API')->group(function() {
 	Route::post('dang-ky', 'NguoiChoiAPI@dangKy');
 	Route::post('dang-nhap', 'NguoiChoiAPI@dangNhap');
 	Route::post('quen-mat-khau', 'NguoiChoiAPI@sendMail');
+	Route::post('xac-nhan-ma', 'NguoiChoiAPI@confirmCode');
 	
 });
 
