@@ -113,16 +113,23 @@ class NguoiChoiAPI extends Controller
         $record= QuenMatKhau::Where('email', $request->email)
                                     ->Where('ma_xac_nhan', $request->ma_xac_nhan)
                                     ->first();
-        $hanSuDung = $record->han_su_dung;                      
-        if($date->lte($hanSuDung))
+                                    
+        $hanSuDung = $record->han_su_dung; 
+        if($record)
         {
-            $res = [
-                'success' => true,
-                'msg'     => 'Mã xác nhận hợp lệ'
-            ];
-            return response()->json($res);
-        }
+                if($date->lte($hanSuDung))
+            {
+                $resetPW = NguoiChoi::Where('email', $record->email)
+                                      ->Update(['mat_khau'->Hash::make($request->mat_khau)]);
+                $res = [
+                    'success' => true,
+                    'msg'     =>'Đổi Mật Khẩu Thành Công'
+                ];
+                return response()->json($res);
+            }
 
+        }                     
+        
         $res = [
                'success' => false,
                'msg'     => 'Mã xác nhận sai hoặc hết hạn, vui lòng thử lại'
