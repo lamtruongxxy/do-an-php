@@ -36,6 +36,7 @@
                           <th>Tên lĩnh vực</th>
                           <th>Ngày xoá</th>
                           <th></th>
+                          <th></th>
                       </tr>
                   </thead>
                   <tbody>
@@ -44,7 +45,7 @@
 	                          <td>{{ $linhvuc->id }}</td>
 	                          <td>{{ $linhvuc->ten_linh_vuc }}</td>
 	                          <td>{{ $linhvuc->deleted_at }}</td>
-	                          <td>
+	                          <td class="d-flex">
 	                          	<form action="{{ route('linh-vuc.restore') }}" method="POST">
 	                          		<input type="hidden" name="id" value="{{ $linhvuc->id }}">
 	                          		@csrf
@@ -52,12 +53,22 @@
 	                                  <button type="submit" class="btn btn-purple waves-effect waves-light">
 	                                      <span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
 	                                  </button>
-                                    <button type="submit" class="btn btn-danger xoa-linh-vuc">
-                                      <span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
-                                    </button>
 	                              </div>                          		
 	                          	</form>
+                              &nbsp;&nbsp;
+                              <form action="{{ route('linh-vuc.delete', ['id' => $linhvuc->id]) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <div class="button-list">
+                                    <button type="submit" class="btn btn-danger waves-effect waves-light xoa-vinh-vien">
+                                        <span class="btn-label"><i class="far fa-trash-alt"></i></span>Xoá
+                                    </button>
+                                </div>                              
+                              </form>
 	                          </td>
+                            <td>
+                              
+                            </td>
 	                      </tr>
                   	@endforeach
                   </tbody>
@@ -102,24 +113,24 @@
         },
 		});
 
-    $(document).on('click', '.xoa-linh-vuc', function(e) {
+    $(document).on('click', '.xoa-vinh-vien', function(e) {
       e.preventDefault();
       var th = $(this);
-                Swal.fire({
-                        title: "Bạn có chắc muốn xoá?",
-                        html: "<div class='text-secondary'>Lưu ý: Câu hỏi bị xoá không thể khôi phục lại</div>",
-                        type: "warning",
-                        showCancelButton: !0,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Xác nhận",
-                        cancelButtonText: "Huỷ bỏ"
-                          }).then(function(t) {
-                              if (t.value) {
-                                th.parent().submit();
-                              }
-                          });
-            })
+      Swal.fire({
+        title: "Bạn có chắc muốn xoá?",
+        html: "<div class='text-secondary'>Lưu ý: Lĩnh vực bị xoá không thể khôi phục lại</div>",
+        type: "warning",
+        showCancelButton: !0,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ bỏ"
+          }).then(function(t) {
+              if (t.value) {
+                th.parent().parent().submit();
+              }
+          });
+      })
 
     });
 </script>

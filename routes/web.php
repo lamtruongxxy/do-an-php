@@ -23,6 +23,7 @@ Route::middleware("auth")->group(function(){
 			Route::delete('/xoa-linh-vuc/{id}', 'LinhVucController@destroy')->name('remove');
 			Route::get('/ds-linh-vuc-da-xoa', 'LinhVucController@trashList')->name('trash');
 			Route::post('/khoi-phuc/', 'LinhVucController@restore')->name('restore');
+			Route::delete('/xoa-vinh-vien/{id}', 'LinhVucController@delete')->name('delete');
 		});
 	});
 

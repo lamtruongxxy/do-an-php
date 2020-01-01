@@ -165,4 +165,11 @@ class LinhVucController extends Controller
         }
     }
 
+    public function delete($id)
+    {
+        $result = LinhVuc::where('id', $id)->forceDelete();
+
+        return back()->with('msg', 'Xoá lĩnh vực thành công');
+    }
+
 }

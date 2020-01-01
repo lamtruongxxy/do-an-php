@@ -65,7 +65,7 @@
                     </button>
                     <button 
                       type='submit'
-                      class='btn btn-danger waves-effect waves-light'>
+                      class='btn btn-danger waves-effect waves-light xoa-goi-credit'>
                       <i class='far fa-trash-alt'></i>
                       Xoá
                     </button>
@@ -202,6 +202,25 @@
         $("#ten_goi_credit").val(ten);
         $("#so_credit").val(credit);
         $('#sotien').val(so_tien);
+    });
+
+    $(document).on('click', '.xoa-goi-credit', function(e) {
+        e.preventDefault();
+        var th = $(this);
+        Swal.fire({
+          title: "Bạn có chắc muốn xoá?",
+          html: "<div class='text-secondary'>Lưu ý: Gói credit bị xoá có thể khôi phục lại</div>",
+          type: "warning",
+          showCancelButton: !0,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Xác nhận",
+          cancelButtonText: "Huỷ bỏ"
+        }).then(function(t) {
+            if (t.value) {
+              th.parent().submit();
+            }
+        })
     });
   
   });
