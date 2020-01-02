@@ -30,29 +30,54 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
-				<table id="nguoi-choi-datatable" class="table">
+				<table id="nguoi-choi-datatable" class="table nowrap">
 					<thead>
 						<tr>
-							<td>ID</td>
-							<td>Tên đăng nhập</td>
-							<td>Email</td>
-							<td>Điểm cao nhất</td>
-							<td>Credit</td>
-							<td>Hình đại diện</td>
-							<td></td>
+							<th>ID</th>
+							<th>Tên đăng nhập</th>
+							<th>Email</th>
+							<th>Điểm cao nhất</th>
+							<th>Credit</th>
+							<th>Hình đại diện</th>
+							<th></th>
+							<th></th>
+							
 						</tr>
 					</thead>
 					<tbody>
+						
             @foreach($dsNguoiChoi as $nguoichoi)
+            <tr>
               <td>{{ $nguoichoi->id }}</td>
               <td>{{ $nguoichoi->ten_dang_nhap }}</td>
               <td>{{ $nguoichoi->email }}</td>
               <td>{{ $nguoichoi->diem_cao_nhat }}</td>
               <td>{{ $nguoichoi->credit }}</td>
               <td>{{ $nguoichoi->hinh_dai_dien }}</td>
-              <td>
-                <button class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+              <td class="d-flex">
+                <form action="{{ route('nguoi-choi.restore') }}" method="POST">
+                	<input type="hidden" name="id" value="{{ $nguoichoi->id }}">
+					@csrf
+					<div class="button-list">
+							<button type="submit" class="btn btn-purple waves-effect waves-light">
+									<span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
+							</button>
+
+							
+					</div> 
+				</form>
+				 &nbsp;&nbsp;
+              <form action="{{ route('nguoi-choi.delete', ['id' => $nguoichoi->id]) }}" method="POST">
+               @method('DELETE')
+               @csrf
+                <div class="button-list">
+                   <button type="submit" class="btn btn-danger xoa-vinh-vien">
+                      			  <span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
+                    </button>
+                </div>                              
+              </form>
               </td>
+          </tr>
             @endforeach
 					</tbody>
 				</table>
@@ -97,6 +122,26 @@
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
       },
     });
+     $(document).on('click', '.xoa-vinh-vien', function(e) {
+		      e.preventDefault();
+		      var th = $(this);
+                Swal.fire({
+                        title: "Bạn có chắc muốn xoá?",
+                        html: "<div class='text-secondary'>Lưu ý: Người chơi bị xoá không thể khôi phục lại</div>",
+                        type: "warning",
+                        showCancelButton: !0,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Xác nhận",
+                        cancelButtonText: "Huỷ bỏ"
+                          }).then(function(t) {
+                              if (t.value) {
+                                th.parent().submit();
+                              }
+                          });
+            })
+  
   });
 </script>
+@include('components.toast')
 @endpush

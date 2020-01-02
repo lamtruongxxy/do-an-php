@@ -124,6 +124,7 @@ class GoiCreditController extends Controller
             return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
         }
     }
+
     public function restore(Request $request)
     {
         try {
@@ -138,5 +139,11 @@ class GoiCreditController extends Controller
         } catch (Exception $ex) {
             return back()->withErrors('Có lỗi xãy ra, mời thử lại sau');
         }
+    }
+
+     public function delete($id)
+    {
+        $result = GoiCredit::where('id', $id)->forceDelete();
+        return back()->with('msg', 'Xoá gói credit thành công');
     }
 }

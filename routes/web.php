@@ -37,6 +37,7 @@ Route::middleware("auth")->group(function(){
 			Route::put('/sua-cau-hoi/{id}', 'CauHoiController@update')->name('update');
 			Route::delete('/xoa-cau-hoi/{id}', 'CauHoiController@destroy')->name('remove');
 			Route::post('/khoi-phuc/{id}', 'CauHoiController@restore')->name('restore');
+			Route::delete('/xoa-vinh-vien/{id}', 'CauHoiController@delete')->name('delete');
 		});
 	});
 
@@ -49,6 +50,7 @@ Route::middleware("auth")->group(function(){
 			Route::delete('/xoa-goi-credit/{id}', 'GoiCreditController@destroy')->name('remove');
 			Route::get('/ds-goi-credit-da-xoa', 'GoiCreditController@trashList')->name('trash');
 			Route::post('/khoi-phuc/', 'GoiCreditController@restore')->name('restore');
+			Route::delete('/xoa-vinh-vien/{id}', 'GoiCreditController@delete')->name('delete');
 		});
 	});
 
@@ -56,6 +58,9 @@ Route::middleware("auth")->group(function(){
 		Route::name('nguoi-choi.')->group(function() {
 			Route::get('/', 'NguoiChoiController@index')->name('index');
 			Route::get('/ds-nguoi-choi-da-xoa', 'NguoiChoiController@trashList')->name('trash');
+			Route::delete('/xoa-nguoi-choi/{id}', 'NguoiChoiController@destroy')->name('remove');
+			Route::post('/khoi-phuc/', 'NguoiChoiController@restore')->name('restore');
+			Route::delete('/xoa-vinh-vien/{id}', 'NguoiChoiController@delete')->name('delete');
 		});
 	});
 

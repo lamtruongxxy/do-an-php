@@ -149,4 +149,11 @@ class CauHoiController extends Controller
             return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
         }
     }
+
+     public function delete($id)
+    {
+        $result = CauHoi::where('id', $id)->forceDelete();
+
+        return back()->with('msg', 'Xoá câu hỏi thành công');
+    }
 }

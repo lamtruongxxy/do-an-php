@@ -43,6 +43,7 @@
 						</tr>
 					</thead>
 					<tbody>
+			<tr>
             @foreach($dsNguoiChoi as $nguoichoi)
               <td>{{ $nguoichoi->id }}</td>
               <td>{{ $nguoichoi->ten_dang_nhap }}</td>
@@ -51,9 +52,13 @@
               <td>{{ $nguoichoi->credit }}</td>
               <td>{{ $nguoichoi->hinh_dai_dien }}</td>
               <td>
-                <a href="#" class="btn btn-warning"><i class='far fa-edit'></i></a>
-                <button class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+                <form action="{{ route('nguoi-choi.remove', ['id' => $nguoichoi->id]) }}" method="POST">
+               	@csrf
+               	@method('DELETE')
+               	 <button class="btn btn-danger xoa-nguoi-choi"><i class='far fa-trash-alt'></i> Xóa</button>
+               </form>
               </td>
+          </tr>
             @endforeach
 					</tbody>
 				</table>
@@ -98,6 +103,26 @@
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
       },
     });
+    $(document).on('click', '.xoa-nguoi-choi', function(e) {
+			e.preventDefault();
+			var th = $(this);
+				Swal.fire({
+					title: "Bạn có chắc muốn xoá?",
+					html: "<div class='text-secondary'>Lưu ý: Người chơi bị xoá có thể được khôi phục lại</div>",
+					type: "warning",
+					showCancelButton: !0,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Xác nhận",
+					cancelButtonText: "Huỷ bỏ"
+				}).then(function(t) {
+						if (t.value) {
+							th.parent().submit();
+						}
+				});
+		})
+
   });
 </script>
+@include('components.toast')
 @endpush

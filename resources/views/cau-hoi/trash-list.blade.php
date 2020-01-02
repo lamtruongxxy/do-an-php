@@ -42,6 +42,8 @@
 							<td>Phương án D</td>
 							<td>Đáp án</td>
 							<td></td>
+							<td></td>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -63,13 +65,20 @@
 													<span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
 											</button>
 
-											<button type="submit" class="btn btn-danger xoa-cau-hoi">
-                                      				<span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
-                                   		    </button>
+											
 									</div> 
 								</form>
+								<form action="{{ route('cau-hoi.delete', ['id' => $cauhoi->id]) }}" method="POST">
+									@method('DELETE')
+             					    @csrf
+									<div class="button-list">
+										<button type="submit" class="btn btn-danger xoa-cau-hoi">
+                                      				<span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
+                                   		</button>
+									</div>
+								</form>
 							</td>
-            </tr>
+        				 </tr>
 						@endforeach
 					</tbody>
         </table>

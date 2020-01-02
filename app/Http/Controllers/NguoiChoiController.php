@@ -85,8 +85,37 @@ class NguoiChoiController extends Controller
      * @param  \App\NguoiChoi  $nguoiChoi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NguoiChoi $nguoiChoi)
+    public function destroy($id)
     {
-        //
+      try {
+            $kq = NguoiChoi::findOrFail($id)->delete();
+            if ($kq) {
+                return back()->with('msg', 'Xoá người chơi thành công');
+            }
+            return back()->withErrors('Xoá người chơi thất bại');
+        } catch (Exception $e) {
+            return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
+        }
+    }
+
+    public function restore(Request $request)
+    {
+       try {
+            $id = $request->id;
+            $nguoiChoi = NguoiChoi::onlyTrashed()->findOrFail($id);
+            $nguoiChoi->restore();
+            if ($nguoiChoi) {
+                return back()->with('msg', 'Khôi phục người chơi thành công');
+            }
+            return back()->withErrors('Khôi phục người chơi thất bại');
+        } catch (Exception $e) {
+            return back()->withErrors('Có lỗi xảy ra, mời thử lại sau');
+        }
+    }
+
+    public function delete($id)
+    {
+        $nguoiChoi = NguoiChoi::Where('id', $id)->forceDelete();
+        return back()->with('msg', 'Xóa người chơi thành công');
     }
 }

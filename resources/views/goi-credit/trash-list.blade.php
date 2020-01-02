@@ -27,7 +27,7 @@
 </div>
 <!-- end page title -->
 <div class="row">
-  <div class="col-7">
+  <div class="col-12">
     <div class="card">
       <div class="card-body">
         <table id="goi-credit-datatable" class="table nowrap">
@@ -38,6 +38,7 @@
               <th>Credit</th>
               <th>Số tiền</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -47,7 +48,7 @@
               <td>{{ $goiCredit->ten_goi }}</td>
               <td>{{ $goiCredit->credit }}</td>
               <td>{{ $goiCredit->so_tien }}</td>
-              <td>
+              <td class="d-flex">
                 <form action="{{ route('goi-credit.restore') }}" method="POST">
                   <input type="hidden" name="id" value="{{ $goiCredit->id }}">
                   @csrf
@@ -55,11 +56,17 @@
                       <button type="submit" class="btn btn-purple waves-effect waves-light">
                           <span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
                       </button>
-
-                      <button type="submit" class="btn btn-danger xoa-goi-credit">
+                  </div>                              
+                </form>
+                &nbsp;&nbsp;
+                <form action="{{ route('goi-credit.delete', ['id' => $goiCredit->id]) }}" method="POST">
+                  @method('DELETE')
+                  @csrf
+                  <div class="button-list">
+                   <button type="submit" class="btn btn-danger xoa-vinh-vien">
                           <span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
                       </button>
-                  </div>                              
+                    </div>
                 </form>
               </td>
             </tr>
@@ -114,12 +121,12 @@
       },
     });
 
-     $(document).on('click', '.xoa-goi-credit', function(e) {
+     $(document).on('click', '.xoa-vinh-vien', function(e) {
       e.preventDefault();
       var th = $(this);
                 Swal.fire({
                         title: "Bạn có chắc muốn xoá?",
-                        html: "<div class='text-secondary'>Lưu ý: Câu hỏi bị xoá không thể khôi phục lại</div>",
+                        html: "<div class='text-secondary'>Lưu ý: Gói credit bị xoá không thể khôi phục lại</div>",
                         type: "warning",
                         showCancelButton: !0,
                         confirmButtonColor: "#3085d6",
