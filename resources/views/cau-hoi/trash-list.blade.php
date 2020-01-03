@@ -30,7 +30,7 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
-				<table id="cau-hoi-datatable" class="table dt-responsive">
+				<table id="cau-hoi-datatable" class="table">
 					<thead>
 						<tr>
 							<td>ID</td>
@@ -42,8 +42,6 @@
 							<td>Phương án D</td>
 							<td>Đáp án</td>
 							<td></td>
-							<td></td>
-							
 						</tr>
 					</thead>
 					<tbody>
@@ -57,28 +55,22 @@
 							<td>{{ $cauhoi->phuong_an_c }}</td>
 							<td>{{ $cauhoi->phuong_an_d }}</td>
 							<td>{{ $cauhoi->dap_an }}</td>
-							<td>
+							<td class="d-flex">
 								<form action="{{ route('cau-hoi.restore', ['id' => $cauhoi->id]) }}" method="POST">
-									@csrf
-									<div class="button-list">
-											<button type="submit" class="btn btn-purple waves-effect waves-light khoi-phuc-cau-hoi">
-													<span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
-											</button>
-
-											
-									</div> 
-								</form>
+										@csrf
+										<button type="submit" class="btn btn-purple waves-effect waves-light khoi-phuc-cau-hoi">
+												<span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
+										</button>
+								</form> &nbsp;&nbsp;
 								<form action="{{ route('cau-hoi.delete', ['id' => $cauhoi->id]) }}" method="POST">
 									@method('DELETE')
-             					    @csrf
-									<div class="button-list">
-										<button type="submit" class="btn btn-danger xoa-cau-hoi">
-                                      				<span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
-                                   		</button>
-									</div>
+									@csrf
+									<button type="button" class="btn btn-danger xoa-vinh-vien">
+										<span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
+									</button>
 								</form>
 							</td>
-        				 </tr>
+        		</tr>
 						@endforeach
 					</tbody>
         </table>
@@ -108,45 +100,43 @@
 <script src="{{ asset('assets/libs/custombox/custombox.min.js') }}"></script>
 <!-- Plugin js-->
 <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
-
-<!-- Validation init js-->
-<script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
 <!-- third party js ends -->
-<!-- Datatables init -->
+
 <script>
-	$(document).ready(function() {
-		$('#cau-hoi-datatable').DataTable({
-			language: {
-					paginate: {
-							previous: "<i class='mdi mdi-chevron-left'>",
-							next: "<i class='mdi mdi-chevron-right'>"
-					}
-			},
-			drawCallback: function() {
-					$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-			},
+    $(document).ready(function() {
+			$("#cau-hoi-datatable").DataTable({
+				language: {
+							paginate: {
+									previous: "<i class='mdi mdi-chevron-left'>",
+									next: "<i class='mdi mdi-chevron-right'>"
+							}
+					},
+					drawCallback: function() {
+							$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+					},
+			});
+
+			$(document).on('click', '.xoa-vinh-vien', function(e) {
+				e.preventDefault();
+				var th = $(this);
+				Swal.fire({
+					title: "Bạn có chắc muốn xoá?",
+					html: "<div class='text-secondary'>Lưu ý: Câu hỏi bị xoá không thể khôi phục lại</div>",
+					type: "warning",
+					showCancelButton: !0,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Xác nhận",
+					cancelButtonText: "Huỷ bỏ"
+						}).then(function(t) {
+								if (t.value) {
+									th.parent().submit();
+								}
+						});
+      })
+
+
 		});
-
-		 $(document).on('click', '.xoa-cau-hoi', function(e) {
-		      e.preventDefault();
-		      var th = $(this);
-                Swal.fire({
-                        title: "Bạn có chắc muốn xoá?",
-                        html: "<div class='text-secondary'>Lưu ý: Câu hỏi bị xoá không thể khôi phục lại</div>",
-                        type: "warning",
-                        showCancelButton: !0,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Xác nhận",
-                        cancelButtonText: "Huỷ bỏ"
-                          }).then(function(t) {
-                              if (t.value) {
-                                th.parent().submit();
-                              }
-                          });
-            })
-
-	});
 </script>
 @include('components.toast')
 @endpush

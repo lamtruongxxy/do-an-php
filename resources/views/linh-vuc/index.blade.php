@@ -95,8 +95,9 @@
 				</div>
 				<div class="form-group">
 					<label for="userName">Hình ảnh<span class="text-danger">*</span></label>
-					<input type="file" name="hinh_anh" class="form-control-file">
+					<input type="file" name="hinh_anh" id="them_hinh_anh" class="form-control-file">
 				</div>
+				<img src="" alt="" id="hien_thi_hinh_anh_add" width="50" height="50">
 				<div class="form-group text-right mb-0">
 					<button class="btn btn-primary waves-effect waves-light" type="submit">
 						<i class="fas fa-plus"></i>
@@ -220,6 +221,16 @@
 				const reader = new FileReader();
 				reader.onload = function(e) {
 					$("#hinh_anh_edit").attr('src', e.target.result);
+				}
+				reader.readAsDataURL(this.files[0]);
+			}
+		});
+
+		$(document).on('change', '#them_hinh_anh', function(e) {
+			if (this.files && this.files[0]) {
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					$("#hien_thi_hinh_anh_add").attr('src', e.target.result);
 				}
 				reader.readAsDataURL(this.files[0]);
 			}

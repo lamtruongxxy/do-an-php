@@ -38,8 +38,6 @@
 							<th>Email</th>
 							<th>Điểm cao nhất</th>
 							<th>Credit</th>
-							<th>Hình đại diện</th>
-							<th></th>
 							<th></th>
 							
 						</tr>
@@ -47,37 +45,37 @@
 					<tbody>
 						
             @foreach($dsNguoiChoi as $nguoichoi)
-            <tr>
-              <td>{{ $nguoichoi->id }}</td>
-              <td>{{ $nguoichoi->ten_dang_nhap }}</td>
-              <td>{{ $nguoichoi->email }}</td>
-              <td>{{ $nguoichoi->diem_cao_nhat }}</td>
-              <td>{{ $nguoichoi->credit }}</td>
-              <td>{{ $nguoichoi->hinh_dai_dien }}</td>
-              <td class="d-flex">
-                <form action="{{ route('nguoi-choi.restore') }}" method="POST">
-                	<input type="hidden" name="id" value="{{ $nguoichoi->id }}">
-					@csrf
-					<div class="button-list">
-							<button type="submit" class="btn btn-purple waves-effect waves-light">
-									<span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
-							</button>
-
-							
-					</div> 
-				</form>
-				 &nbsp;&nbsp;
-              <form action="{{ route('nguoi-choi.delete', ['id' => $nguoichoi->id]) }}" method="POST">
-               @method('DELETE')
-               @csrf
-                <div class="button-list">
-                   <button type="submit" class="btn btn-danger xoa-vinh-vien">
-                      			  <span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
-                    </button>
-                </div>                              
-              </form>
-              </td>
-          </tr>
+              <tr>
+                <td>{{ $nguoichoi->id }}</td>
+                <td>
+                  <img src="{{ asset('storage') }}/avatar/{{ $nguoichoi->hinh_dai_dien }}" width="50" height="50" alt="">
+                  <span>{{ $nguoichoi->ten_dang_nhap }}</span>
+                </td>
+                <td>{{ $nguoichoi->email }}</td>
+                <td>{{ $nguoichoi->diem_cao_nhat }}</td>
+                <td>{{ $nguoichoi->credit }}</td>
+                <td class="d-flex">
+                  <form action="{{ route('nguoi-choi.restore') }}" method="POST">
+                    <input type="hidden" name="id" value="{{ $nguoichoi->id }}">
+                    @csrf
+                    <div class="button-list">
+                      <button type="submit" class="btn btn-purple waves-effect waves-light">
+                        <span class="btn-label"><i class="fas fa-trash-restore"></i></span>Khôi phục
+                      </button>
+                    </div> 
+                  </form>
+                  &nbsp;&nbsp;
+                  <form action="{{ route('nguoi-choi.delete', ['id' => $nguoichoi->id]) }}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <div class="button-list">
+                      <button type="submit" class="btn btn-danger xoa-vinh-vien">
+                          <span class="btn-label"><i class='far fa-trash-alt'></i></span>Xóa
+                      </button>
+                    </div>                              
+                  </form>
+                </td>
+              </tr>
             @endforeach
 					</tbody>
 				</table>
@@ -125,21 +123,21 @@
      $(document).on('click', '.xoa-vinh-vien', function(e) {
 		      e.preventDefault();
 		      var th = $(this);
-                Swal.fire({
-                        title: "Bạn có chắc muốn xoá?",
-                        html: "<div class='text-secondary'>Lưu ý: Người chơi bị xoá không thể khôi phục lại</div>",
-                        type: "warning",
-                        showCancelButton: !0,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Xác nhận",
-                        cancelButtonText: "Huỷ bỏ"
-                          }).then(function(t) {
-                              if (t.value) {
-                                th.parent().submit();
-                              }
-                          });
-            })
+          Swal.fire({
+            title: "Bạn có chắc muốn xoá?",
+            html: "<div class='text-secondary'>Lưu ý: Người chơi bị xoá không thể khôi phục lại</div>",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Huỷ bỏ"
+              }).then(function(t) {
+                  if (t.value) {
+                    th.parent().parent().submit();
+                  }
+              });
+          })
   
   });
 </script>

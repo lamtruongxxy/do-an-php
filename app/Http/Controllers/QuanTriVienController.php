@@ -20,7 +20,7 @@ class QuanTriVienController extends Controller
     $cen = $request->only("ten_dang_nhap","password");
     if(Auth::attempt($cen))
     {
-        return redirect()->route('linh-vuc.index');
+        return redirect()->route('index');
     }
 
     else

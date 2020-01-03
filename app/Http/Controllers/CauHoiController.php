@@ -97,7 +97,7 @@ class CauHoiController extends Controller
      * @param  \App\CauHoi  $cauHoi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CauHoiRequest $request, $id)
     {
         $kq = CauHoi::findOrFail($id)->update($request->all());
         try {

@@ -4,12 +4,13 @@
 
 use App\LichSuMuaCredit;
 use Faker\Generator as Faker;
+use Carbon\Carbon;
 
 $factory->define(LichSuMuaCredit::class, function (Faker $faker) {
+    $random = rand(-10, 10);
     return [
         'nguoi_choi_id' => App\NguoiChoi::pluck('id')->random(),
         'goi_credit_id' => App\GoiCredit::pluck('id')->random(),
-        'credit'        => App\GoiCredit::pluck('credit')->random(),
-        'so_tien'       => App\GoiCredit::pluck('so_tien')->random()
+        'trang_thai'    => rand(0, 1)
     ];
 });

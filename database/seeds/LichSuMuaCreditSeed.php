@@ -11,6 +11,6 @@ class LichSuMuaCreditSeed extends Seeder
      */
     public function run()
     {
-        factory(App\LichSuMuaCredit::class, 5)->create();
+        factory(App\LichSuMuaCredit::class, 100)->create();
     }
 }

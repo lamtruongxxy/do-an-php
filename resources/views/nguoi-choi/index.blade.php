@@ -38,7 +38,6 @@
 							<td>Email</td>
 							<td>Điểm cao nhất</td>
 							<td>Credit</td>
-							<td>Hình đại diện</td>
 							<td></td>
 						</tr>
 					</thead>
@@ -46,11 +45,13 @@
 			<tr>
             @foreach($dsNguoiChoi as $nguoichoi)
               <td>{{ $nguoichoi->id }}</td>
-              <td>{{ $nguoichoi->ten_dang_nhap }}</td>
+              <td>
+								<img src="{{ asset('storage') }}/avatar/{{ $nguoichoi->hinh_dai_dien }}" width="50" height="50" alt="">
+								<span>{{ $nguoichoi->ten_dang_nhap }}</span>
+							</td>
               <td>{{ $nguoichoi->email }}</td>
               <td>{{ $nguoichoi->diem_cao_nhat }}</td>
               <td>{{ $nguoichoi->credit }}</td>
-              <td>{{ $nguoichoi->hinh_dai_dien }}</td>
               <td>
                 <form action="{{ route('nguoi-choi.remove', ['id' => $nguoichoi->id]) }}" method="POST">
                	@csrf

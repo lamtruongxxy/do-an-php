@@ -54,8 +54,7 @@
             id="phuong_an_a" 
             type="text" 
             placeholder="Phương án A" 
-            name="phuong_an_a" 
-          
+            name="phuong_an_a"
             class="form-control"
             value="{{ old('phuong_an_a', isset($cauhoi) ? $cauhoi->phuong_an_a : '') }}">
         </div>

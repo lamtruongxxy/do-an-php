@@ -26,6 +26,64 @@
   </div>
 </div>
 <!-- end page title -->
+
+<div class="row">
+  <div class="col-xl-4">
+      <div class="card-box">
+        <div class="row">
+            <div class="col-6">
+                <div class="avatar-sm bg-light rounded">
+                    <i class="fas fa-money-check-alt avatar-title font-22 text-success"></i>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="text-right">
+                    <h3 class="text-dark my-1"><span data-plugin="">{{ $doanhThu }}</span></h3>
+                    <p class="text-muted mb-1 text-truncate">Doanh thu hôm nay</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end card-box-->
+  </div><!-- end col -->
+
+  <div class="col-xl-4">
+      <div class="card-box">
+        <div class="row">
+            <div class="col-6">
+                <div class="avatar-sm bg-light rounded">
+                    <i class="fas fa-money-check-alt avatar-title font-22 text-danger"></i>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="text-right">
+                    <h3 class="text-dark my-1"><span data-plugin="">{{ $doanhThuThang }}</span></h3>
+                    <p class="text-muted mb-1 text-truncate">Doanh thu tháng {{ $thang }} năm {{ $nam }}</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end card-box-->
+  </div><!-- end col -->
+
+  <div class="col-xl-4">
+      <div class="card-box">
+        <div class="row">
+            <div class="col-6">
+                <div class="avatar-sm bg-light rounded">
+                    <i class="fas fa-money-check-alt avatar-title font-22 text-warning"></i>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="text-right">
+                    <h3 class="text-dark my-1"><span data-plugin="">{{ $doanhThuNam }}</span></h3>
+                    <p class="text-muted mb-1 text-truncate">Doanh thu năm {{ $nam }}</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end card-box-->
+  </div><!-- end col -->
+
+</div>
+
 <div class="row">
   <div class="col-12">
     <div class="card">
@@ -34,27 +92,25 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Tên người chơi</th>
+              <th>Người chơi</th>
               <th>Gói credit</th>
               <th>Credit</th>
               <th>Số tiền</th>
               <th>Ngày mua</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
             @foreach($dsLichSuMuaCredit as $lichsu)
             <tr>
               <td>{{ $lichsu->id }}</td>
-              <td>{{ $lichsu->nguoiChoi->ten_dang_nhap }}</td>
-              <td>{{ $lichsu->goiCredit->ten_goi }}</td>
-              <td>{{ $lichsu->credit }}</td>
-              <td>{{ $lichsu->so_tien }}</td>
-              <td>{{ $lichsu->created_at }}</td>
               <td>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#form-edit"><i class='far fa-edit'></i></button>
-                <button class="btn btn-danger"><i class='far fa-trash-alt'></i></button>
+                <img src="{{ asset('storage') }}/avatar/{{ $lichsu->nguoiChoi->hinh_dai_dien }}" width="50" height="50" alt="">
+                <span>{{ $lichsu->nguoiChoi->ho_ten }}</span>
               </td>
+              <td>{{ $lichsu->goiCredit->ten_goi }}</td>
+              <td>{{ $lichsu->goiCredit->credit }}</td>
+              <td>{{ $lichsu->goiCredit->so_tien }}</td>
+              <td>{{ $lichsu->ngay_mua }}</td>
             </tr>
             @endforeach
           </tbody>

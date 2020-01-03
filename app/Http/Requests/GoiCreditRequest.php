@@ -26,7 +26,7 @@ class GoiCreditRequest extends FormRequest
         return [
             "ten_goi"=>"required|min:3|unique:goi_credit,ten_goi",
             "credit"=>"required|unique:goi_credit,credit",
-            "so_tien"=>"required"
+            "so_tien"=>"required|numeric"
         ];
     }
 
@@ -40,7 +40,9 @@ class GoiCreditRequest extends FormRequest
            "ten_goi.min"=>"Tên gói Credit từ 3 ký tự trở lên",
            "credit.unique"=>"Số Credit đã tồn tại",
 
-           "ten_goi.unique"=>"Tên gói đã tồn tại"
+           "ten_goi.unique"=>"Tên gói đã tồn tại",
+
+           "so_tien.numeric" => "Số tiền phải là số"
         ];
     }
 }

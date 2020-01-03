@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/', 'LinhVucController@index')->middleware("auth");
+// Route::get('/', 'LinhVucController@index')->middleware("auth");
+
+use App\Utilities\FormatPriceVND;
 
 Route::middleware("auth")->group(function(){ 
+
+	Route::get('/', 'DashBoardController@index')->name('index');
+
 	Route::prefix("linh-vuc")->group(function() {
 		Route::name("linh-vuc.")->group(function() {
 			Route::get("/", "LinhVucController@index")->name('index');
@@ -79,6 +84,7 @@ Route::middleware("auth")->group(function(){
 
 
 
-Route::get('dang-nhap','QuanTriVienController@getLogin')->name('get-login')->middleware('CheckLogin');
+Route::get('dang-nhap','QuanTriVienController@getLogin')->name('get-login')->middleware('guest');
 Route::post('dang-nhap','QuanTriVienController@postLogin')->name('post-login');
 Route::get('dang-xuat','QuanTriVienController@logout')->name('logout');
+

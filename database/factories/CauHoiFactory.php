@@ -14,6 +14,6 @@ $factory->define(CauHoi::class, function (Faker $faker) {
         'phuong_an_b'	=> $faker->sentence(),
         'phuong_an_c'	=> $faker->sentence(),
         'phuong_an_d'	=> $faker->sentence(),
-        'dap_an'	=> $dap_an[array_rand($dap_an)]
+        'dap_an'	    => $dap_an[array_rand($dap_an)]
     ];
 });

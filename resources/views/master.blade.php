@@ -70,13 +70,13 @@
   <div class="rightbar-overlay"></div>
   <!-- Vendor js -->
   <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
-  <!-- App js-->
-  <script src="{{ asset('assets/js/app.min.js') }}"></script>
   <!-- Toast-->
   <script src="{{ asset('assets/libs/jquery-toast/jquery.toast.min.js') }}"></script>
   <!-- sweetalert -->
-  <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
   @stack('scripts')
+  <!-- App js-->
+  <script src="{{ asset('assets/js/app.min.js') }}"></script>
 
 </body>
 

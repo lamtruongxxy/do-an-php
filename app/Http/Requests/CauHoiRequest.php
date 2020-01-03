@@ -24,7 +24,8 @@ class CauHoiRequest extends FormRequest
     public function rules()
     {
         return [
-            "noi_dung"      => "required|min:3|unique:cau_hoi,noi_dung",
+            "noi_dung"      => "required|min:3",
+            "linh_vuc_id"   => "required|exists:linh_vuc,id",
             "phuong_an_a"   =>"required",
             "phuong_an_b"   =>"required",
             "phuong_an_c"   =>"required",
@@ -38,6 +39,8 @@ class CauHoiRequest extends FormRequest
     {
         return [
             "noi_dung.required"     =>"Điền đầy đủ nội dung",
+            "linh_vuc_id.required"  => "Lĩnh vực không để trống",
+            "linh_vuc_id.exists"    => "Lĩnh vực không tồn tại",
             "phuong_an_a.required"  =>"Điền phương án a",
             "phuong_an_b.required"  =>"Điền phương án b",
             "phuong_an_c.required"  =>"Điền phương án c",

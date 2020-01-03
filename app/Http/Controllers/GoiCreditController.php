@@ -55,36 +55,7 @@ class GoiCreditController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\GoiCredit  $goiCredit
-     * @return \Illuminate\Http\Response
-     */
-    public function show(GoiCredit $goiCredit)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\GoiCredit  $goiCredit
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(GoiCredit $goiCredit)
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\GoiCredit  $goiCredit
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
+    public function update(GoiCreditRequest $request)
     {
         try {
             $goiCredit = GoiCredit::findOrFail($request->id);

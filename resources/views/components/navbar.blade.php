@@ -5,12 +5,12 @@
       <ul class="navigation-menu">
 
         <li class="has-submenu">
-          <a href="#">
+          <a href="{{ route('index') }}">
             <i class="la la-dashboard"></i>Trang chủ</a>
         </li>
 
         <li class="has-submenu">
-          <a href="#">
+          <a href="{{ route('linh-vuc.index') }}">
             <i class="la la-cube"></i>Lĩnh vực <div class="arrow-down"></div></a>
           <ul class="submenu">
             <li>

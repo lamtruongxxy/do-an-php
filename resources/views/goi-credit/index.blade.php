@@ -45,8 +45,8 @@
             <tr>
               <td>{{ $goiCredit->id }}</td>
               <td>{{ $goiCredit->ten_goi }}</td>
-              <td>{{ $goiCredit->credit }}</td>
-              <td>{{ $goiCredit->so_tien }}</td>
+              <td>{{ $goiCredit->credit_format }}</td>
+              <td>{{ $goiCredit->so_tien_format }}</td>
               <td>
                 <form action="{{ route('goi-credit.remove', ['id' => $goiCredit->id ]) }}" method="POST">
                     @csrf
@@ -88,15 +88,35 @@
         @csrf
         <div class="form-group">
           <label for="userName">Tên gói credit<span class="text-danger">*</span></label>
-          <input type="text" parsley-trigger="change" placeholder="Nhập tên gói credit" class="form-control" id="ten_goi" name="ten_goi">
+          <input 
+            type="text" 
+            parsley-trigger="change" 
+            placeholder="Nhập tên gói credit" 
+            class="form-control" 
+            id="ten_goi" 
+            name="ten_goi"
+            value="{{ old('ten_goi') }}">
         </div>
         <div class="form-group">
           <label for="userName">Credit<span class="text-danger">*</span></label>
-          <input type="number" parsley-trigger="change" placeholder="Nhập số credit" class="form-control" id="credit" name="credit">
+          <input 
+            type="number" 
+            parsley-trigger="change" 
+            placeholder="Nhập số credit" 
+            class="form-control" 
+            id="credit" 
+            name="credit"
+            value="{{ old('credit') }}">
         </div>
         <div class="form-group">
           <label for="userName">Số tiền<span class="text-danger">*</span></label>
-          <input type="number" parsley-trigger="change" placeholder="Nhập số tiền" class="form-control" id="so_tien" name="so_tien">
+          <input 
+            type="number" 
+            parsley-trigger="change" 
+            placeholder="Nhập số tiền" 
+            class="form-control"
+            id="so_tien" name="so_tien"
+            value="{{ old('so_tien') }}">
         </div>
         <div class="form-group text-right mb-0">
           <button class="btn btn-primary waves-effect waves-light" type="submit">

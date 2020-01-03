@@ -9,9 +9,14 @@ class LuotChoi extends Model
     protected $table = 'luot_choi';
     protected $fillable = ['nguoi_choi_id', 'so_cau', 'diem'];
 
-    public function cauHoi()
+    // public function cauHoi()
+    // {
+    //     return $this->belongsToMany('App\CauHoi', 'chi_tiet_luot_choi');
+    // }
+
+    public function nguoiChoi()
     {
-        return $this->belongsToMany('App\CauHoi', 'chi_tiet_luot_choi');
+        return $this->belongsTo('App\NguoiChoi');
     }
 
     public function getCreatedAtAttribute($date)

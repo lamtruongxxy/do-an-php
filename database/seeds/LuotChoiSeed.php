@@ -11,6 +11,6 @@ class LuotChoiSeed extends Seeder
      */
     public function run()
     {
-        factory(App\LuotChoi::class, 10)->create();
+        factory(App\LuotChoi::class, 100)->create();
     }
 }
