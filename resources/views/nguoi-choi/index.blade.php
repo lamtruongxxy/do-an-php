@@ -35,6 +35,7 @@
 						<tr>
 							<td>ID</td>
 							<td>Tên đăng nhập</td>
+							<td>Họ tên</td>
 							<td>Email</td>
 							<td>Điểm cao nhất</td>
 							<td>Credit</td>
@@ -47,8 +48,14 @@
               <td>{{ $nguoichoi->id }}</td>
               <td>
 								<img src="{{ asset('storage') }}/avatar/{{ $nguoichoi->hinh_dai_dien }}" width="50" height="50" alt="">
-								<span>{{ $nguoichoi->ten_dang_nhap }}</span>
+								<a 
+									href="{{ route('nguoi-choi.profile', ['name' => $nguoichoi->ten_dang_nhap]) }}" 
+									class="ml-2"
+									style="color: #6c757d">
+									{{ $nguoichoi->ten_dang_nhap }}
+								</a>
 							</td>
+							<td>{{ $nguoichoi->ho_ten }}</td>
               <td>{{ $nguoichoi->email }}</td>
               <td>{{ $nguoichoi->diem_cao_nhat }}</td>
               <td>{{ $nguoichoi->credit }}</td>

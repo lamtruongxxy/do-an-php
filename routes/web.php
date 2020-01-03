@@ -66,6 +66,7 @@ Route::middleware("auth")->group(function(){
 			Route::delete('/xoa-nguoi-choi/{id}', 'NguoiChoiController@destroy')->name('remove');
 			Route::post('/khoi-phuc/', 'NguoiChoiController@restore')->name('restore');
 			Route::delete('/xoa-vinh-vien/{id}', 'NguoiChoiController@delete')->name('delete');
+			Route::get('profile/{name}', 'NguoiChoiController@profile')->name('profile');
 		});
 	});
 

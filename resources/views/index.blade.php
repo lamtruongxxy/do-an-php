@@ -101,8 +101,13 @@
                   @foreach ($lsMuaCredit as $ls)
                     <tr>
                         <td>
-                            <img src="assets/images/users/user-2.jpg" alt="user-pic" class="rounded-circle avatar-sm" />
-                            <span class="ml-2">{{ $ls->nguoiChoi->ho_ten }}</span>
+                            <img src="{{ asset('storage') }}/avatar/{{ $ls->nguoiChoi->hinh_dai_dien }}" alt="user-pic" class="rounded-circle avatar-sm" />
+                            <a 
+                              href="{{ route('nguoi-choi.profile', ['name' => $ls->nguoiChoi->ten_dang_nhap]) }}" 
+                              class="ml-2"
+                              style="color: #6c757d">
+                              {{ $ls->nguoiChoi->ho_ten }}
+                            </a>
                         </td>
                         <td>
                             <span class="ml-2">{{ $ls->ngay_mua }}</span>
@@ -146,8 +151,13 @@
                   @foreach ($lsLuotChoi as $ls)
                     <tr>
                         <td>
-                            <img src="assets/images/users/user-2.jpg" alt="user-pic" class="rounded-circle avatar-sm" />
-                            <span class="ml-2">{{ $ls->nguoiChoi->ho_ten }}</span>
+                            <img src="{{ asset('storage') }}/avatar/{{ $ls->nguoiChoi->hinh_dai_dien }}" alt="user-pic" class="rounded-circle avatar-sm" />
+                            <a 
+                              href="{{ route('nguoi-choi.profile', ['name' => $ls->nguoiChoi->ten_dang_nhap]) }}" 
+                              class="ml-2"
+                              style="color: #6c757d">
+                              {{ $ls->nguoiChoi->ho_ten }}
+                            </a>
                         </td>
                         <td>
                             <span class="ml-2">{{ $ls->so_cau }}</span>

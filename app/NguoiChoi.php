@@ -38,4 +38,9 @@ class NguoiChoi extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function dsGoiCredit()
+    {
+        return $this->hasManyThrough('App\GoiCredit', 'App\LichSuMuaCredit');
+    }
 }

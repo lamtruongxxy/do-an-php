@@ -105,7 +105,12 @@
               <td>{{ $lichsu->id }}</td>
               <td>
                 <img src="{{ asset('storage') }}/avatar/{{ $lichsu->nguoiChoi->hinh_dai_dien }}" width="50" height="50" alt="">
-                <span>{{ $lichsu->nguoiChoi->ho_ten }}</span>
+                <a 
+									href="{{ route('nguoi-choi.profile', ['name' => $lichsu->nguoiChoi->ten_dang_nhap]) }}" 
+									class="ml-2"
+									style="color: #6c757d">
+									{{ $lichsu->nguoiChoi->ho_ten }}
+								</a>
               </td>
               <td>{{ $lichsu->goiCredit->ten_goi }}</td>
               <td>{{ $lichsu->goiCredit->credit }}</td>

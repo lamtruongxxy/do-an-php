@@ -2,30 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\NguoiChoi;
 use Illuminate\Http\Request;
+
+use App\NguoiChoi;
+use App\LichSuMuaCredit;
+use App\LuotChoi;
+use Exception;
 
 class NguoiChoiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $dsNguoiChoi = NguoiChoi::all();
         return view('nguoi-choi.index', compact('dsNguoiChoi'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
     }
 
     public function trashList()
@@ -34,57 +23,8 @@ class NguoiChoiController extends Controller
         return view('nguoi-choi.trash-list', compact('dsNguoiChoi'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\NguoiChoi  $nguoiChoi
-     * @return \Illuminate\Http\Response
-     */
-    public function show(NguoiChoi $nguoiChoi)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\NguoiChoi  $nguoiChoi
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(NguoiChoi $nguoiChoi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NguoiChoi  $nguoiChoi
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, NguoiChoi $nguoiChoi)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\NguoiChoi  $nguoiChoi
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
       try {
@@ -117,5 +57,28 @@ class NguoiChoiController extends Controller
     {
         $nguoiChoi = NguoiChoi::Where('id', $id)->forceDelete();
         return back()->with('msg', 'Xóa người chơi thành công');
+    }
+
+    public function profile($name)
+    {
+        try {
+            $nguoiChoi = NguoiChoi::where('ten_dang_nhap', $name)->first();
+            $lsMuaCredit = LichSuMuaCredit::where('nguoi_choi_id', $nguoiChoi->id)->get();
+            $lsLuotChoi = LuotChoi::where('nguoi_choi_id', $nguoiChoi->id)->get();
+    
+            $dsNguoiChoi = NguoiChoi::orderBy('diem_cao_nhat', 'desc')->get();
+            $hang = 0;
+            for($i=0; $i<sizeof($dsNguoiChoi); $i++)
+            {
+                if ($dsNguoiChoi[$i]->ten_dang_nhap === $name) {
+                    $hang = $i;
+                    break;
+                }
+            }
+            return view('nguoi-choi.profile', compact('nguoiChoi', 'lsMuaCredit', 'lsLuotChoi', 'hang'));
+        } catch (Exception $ex) {
+            return view('errors.404');
+        }
+        
     }
 }
