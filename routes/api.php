@@ -33,7 +33,8 @@ Route::namespace('API')->group(function() {
 	
 		Route::prefix('nguoi-choi')->group(function() {
 			Route::get('/', 'NguoiChoiAPI@LayDSNguoiChoi');
-			Route::get('/{id}', 'NguoiChoiAPI@ChiTietNguoiChoi');		
+			Route::post('doi-mat-khau', 'NguoiChoiAPI@doiMatKhau');	
+			Route::get('/thong-tin/{id}', 'NguoiChoiAPI@thongTin');	
 		});
 	
 		Route::get('xep-hang', "NguoiChoiAPI@xepHang");
@@ -42,6 +43,8 @@ Route::namespace('API')->group(function() {
 		Route::get('cau-hoi/{id}', 'CauHoiAPI@cauHoiTheoLinhVuc');
 
 		Route::post('luu-luot-choi', 'LuotChoiAPI@luuLuotChoi');
+
+
 	
 		
 	});
@@ -50,6 +53,7 @@ Route::namespace('API')->group(function() {
 	Route::post('dang-nhap', 'NguoiChoiAPI@dangNhap');
 	Route::post('quen-mat-khau', 'NguoiChoiAPI@sendMail');
 	Route::post('xac-nhan-ma', 'NguoiChoiAPI@confirmCode');
+
 	
 });
 

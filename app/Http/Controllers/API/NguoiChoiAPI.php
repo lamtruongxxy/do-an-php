@@ -20,15 +20,6 @@ use Illuminate\Support\Facades\Mail;
 
 class NguoiChoiAPI extends Controller
 {
-    public function ChiTietNguoiChoi($id)
-    {
-				$nguoichoi = NguoiChoi::find($id);
-				$res = [
-					"success"	=> true,
-					"data"		=> $nguoichoi
-				];
-    		return response()->json($res);
-		}
 		
     public function xepHang(Request $request)
     {
@@ -64,7 +55,7 @@ class NguoiChoiAPI extends Controller
 		// 						->skip(($page - 1) * $limit)
 		// 						->take($limit)
 		// 							->get();
-        $listLuotChoi = LuotChoi::where('nguoi_choi_id',$id)->orderBy('diem', 'desc')
+        $listLuotChoi = LuotChoi::where('nguoi_choi_id',$id)->orderBy('created_at', 'desc')
                              ->skip(($page - 1) * $limit)
                              ->take($limit)
                                  ->get();
@@ -235,5 +226,86 @@ class NguoiChoiAPI extends Controller
         } catch (Exception $e) {
             return response()->json(['success' => false, 'msg' => 'Có lỗi xảy ra, mời thử lại sau']);
         }
+    }
+
+    public function doiMatKhau(Request $req)
+    {
+        try {
+
+            $valid = Validator::make(
+                $req->all(),
+                [
+                    'id'            => 'required|exists:nguoi_choi,id',
+                    'mat_khau_cu'   => 'required',
+                    'mat_khau_moi'  => 'required|min:6|max:30'
+                ],
+                [
+                    'id.required'           => 'ID không để trống',
+                    'mat_khau_cu.required'  => 'Mật khẩu cũ không để trống',
+                    'mat_khau_moi.required' => 'Mật khẩu mới không để trống',
+                    'id.exists'             => 'ID không tồn tại',
+                    'mat_khau_moi.min'      => 'Mật khẩu tối thiểu 6 ký tự',
+                    'mat_khau_moi.max'      => 'Mật khẩu tối đa 30 ký tự',
+                ]
+            );
+
+            if (!$valid->passes()) {
+                return \response()->json(['success' => false, 'msg' => $valid->errors()->first()]);
+            }
+
+            $nguoiChoi = NguoiChoi::find($req->id);
+
+            $checkPwd = Hash::check($req->mat_khau_cu, $nguoiChoi->mat_khau);
+            if (!$checkPwd) {
+                return response()->json(['success'  => false, 'msg' => 'Mật khẩu cũ không đúng, mời thử lại']);
+            }
+
+            $nguoiChoi->mat_khau = Hash::make($req->mat_khau_moi);
+            $kq = $nguoiChoi->save();
+            
+            if ($kq) {
+                return response()->json(['success'  => true, 'msg'  => 'Đổi mật khẩu thành công']);
+            }
+            return response()->json(['success'  => false, 'msg'  => 'Đổi mật khẩu thất bại']);
+        } catch(Exception $ex) {
+            return response()->json(['success'  => false, 'msg' => 'Có lỗi xảy ra, mời thử lại sau']);
+        }
+        
+    }
+
+    public function thongTin($id)
+    {
+        $valid = Validator::make(
+            ['id'   => $id],
+            [
+                'id'            => 'required|exists:nguoi_choi,id',
+            ],
+            [
+                'id.required'           => 'ID không để trống',
+                'id.exists'             => 'ID không tồn tại'
+            ]
+        );
+
+        if (!$valid->passes()) {
+            return \response()->json(['success' => false, 'msg' => $valid->errors()->first()]);
+        }
+
+        $nguoiChoi = NguoiChoi::find($id);
+
+        $dsNguoiChoi = NguoiChoi::orderBy('diem_cao_nhat', 'desc')->get();
+        $hang = 0;
+        for($i=0; $i<sizeof($dsNguoiChoi); $i++)
+        {
+            if ($dsNguoiChoi[$i]->ten_dang_nhap === $nguoiChoi->ten_dang_nhap) {
+                $hang = $i;
+                break;
+            }
+        }
+        
+        return response()->json([
+            'success'   => true,
+            'data'      => $nguoiChoi,
+            'hang'      => $hang
+        ]);
     }
 }
